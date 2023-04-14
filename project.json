@@ -1,0 +1,8 @@
+{
+  "engine": "cocos-creator-js",
+  "packages": "packages",
+  "name": "ChickenGame",
+  "id": "d7bb03c3-44fa-40e3-b373-f0052b3e358d",
+  "version": "2.4.10",
+  "isNew": false
+}
