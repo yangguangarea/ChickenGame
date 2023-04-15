@@ -8,6 +8,13 @@
     ]
   ],
   "excluded-modules": [
+    "Graphics",
+    "Mask",
+    "MotionStreak",
+    "Physics",
+    "ParticleSystem",
+    "ScrollView",
+    "Toggle",
     "TiledMap",
     "VideoPlayer",
     "3D",
