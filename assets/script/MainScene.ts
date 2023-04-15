@@ -8,15 +8,17 @@
 const {ccclass, property} = cc._decorator;
 
 @ccclass
-export default class NewClass extends cc.Component {
+export default class MainScene extends cc.Component {
 
     @property(cc.Label)
     label: cc.Label = null;
 
+
+    @property(cc.Prefab)
+    ruleDialog: cc.Prefab = null;
+    
     
     text: string = 'hello';
-
-    // LIFE-CYCLE CALLBACKS:
 
     // onLoad () {}
 
@@ -25,6 +27,30 @@ export default class NewClass extends cc.Component {
     }
 
     // update (dt) {}
+
+
+
+    //游戏规则点击
+    ruleBtnClick() {
+        console.log("游戏规则点击");
+
+        let ruleContent = this.node.getChildByName('ruleContent');
+        ruleContent.removeAllChildren();
+
+        let ruleDialog = cc.instantiate(this.ruleDialog);
+        ruleContent.addChild(ruleDialog);
+    }
+
+    //音乐开关点击
+    musicBtnClick() {
+        console.log("音乐开关点击");
+    }
+
+    //游戏开始点击
+    gameBeginClick() {
+        console.log("游戏开始点击");
+    }
+
 }
 
 //公众号，接入微信，获取用户昵称和头像，openid

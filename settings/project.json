@@ -8,8 +8,6 @@
     ]
   ],
   "excluded-modules": [
-    "Graphics",
-    "Mask",
     "MotionStreak",
     "Physics",
     "ParticleSystem",
