@@ -5,6 +5,11 @@ const {ccclass, property} = cc._decorator;
 export default class GameManager extends cc.Component {
 
     @property(cc.Node)
+    itemChangelai: cc.Node = null;
+    @property(cc.Node)
+    itemChangewang: cc.Node = null;
+
+    @property(cc.Node)
     readyBegin: cc.Node = null;
 
     @property(cc.Node)
@@ -51,6 +56,19 @@ export default class GameManager extends cc.Component {
         this.gameContent.removeAllChildren();
     }
 
+    //开始游戏
+    startGame() {
+        this.isPlaying = true;
+        //创建一堆item
+
+        this.itemChangelai;
+
+    }
+
+    finishGame() {
+        this.isPlaying = false;
+    }
+
 
     update (dt:number) {
         if(!this.isPlaying) return;
@@ -71,12 +89,5 @@ export default class GameManager extends cc.Component {
 
     }
 
-    //开始游戏
-    startGame() {
-        this.isPlaying = true;
-    }
 
-    finishGame() {
-        this.isPlaying = false;
-    }
 }
