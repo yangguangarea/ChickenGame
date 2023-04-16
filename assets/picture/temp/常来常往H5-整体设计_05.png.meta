@@ -1,0 +1,38 @@
+{
+  "ver": "2.3.7",
+  "uuid": "c77b680d-7615-48ab-9bee-dc4d560af6f3",
+  "importer": "texture",
+  "type": "sprite",
+  "wrapMode": "clamp",
+  "filterMode": "bilinear",
+  "premultiplyAlpha": false,
+  "genMipmaps": false,
+  "packable": true,
+  "width": 750,
+  "height": 1333,
+  "platformSettings": {},
+  "subMetas": {
+    "常来常往H5-整体设计_05": {
+      "ver": "1.0.6",
+      "uuid": "91154bb8-ecbe-4063-b9b0-9e4462d31e68",
+      "importer": "sprite-frame",
+      "rawTextureUuid": "c77b680d-7615-48ab-9bee-dc4d560af6f3",
+      "trimType": "auto",
+      "trimThreshold": 1,
+      "rotated": false,
+      "offsetX": 0,
+      "offsetY": 0,
+      "trimX": 0,
+      "trimY": 0,
+      "width": 750,
+      "height": 1333,
+      "rawWidth": 750,
+      "rawHeight": 1333,
+      "borderTop": 0,
+      "borderBottom": 0,
+      "borderLeft": 0,
+      "borderRight": 0,
+      "subMetas": {}
+    }
+  }
+}
