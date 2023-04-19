@@ -21,10 +21,6 @@ export default class RuleDialog extends cc.Component {
         bg_grey.runAction(cc.fadeTo(0.2, 155));
     }
 
-    update (dt) {
-        // console.log('---', this.node.width, this.node.height);
-    }
-
     closeBtnClick() {
         console.log("----RuleDialog---closeBtnClick");
         let content = this.node.getChildByName('content');

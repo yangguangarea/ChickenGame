@@ -8,6 +8,9 @@ export default class MainScene extends cc.Component {
 
     @property(cc.Prefab)
     ruleDialogPrefab: cc.Prefab = null;
+
+    @property(cc.Prefab)
+    resultDialogPrefab: cc.Prefab = null;
     
     //游戏节点
     @property(cc.Prefab)
@@ -25,26 +28,38 @@ export default class MainScene extends cc.Component {
 
     start () {
         //默认播放音乐
-        setTimeout(() => {
-            // this.musicBtnClick();
-        }, 1000);
+        // setTimeout(() => {
+        //     this.musicBtnClick();
+        // }, 1000);
     }
 
     // update (dt) {}
 
+    testBtnClick1() {
+        this.showResultDialog();
+    }
 
+    testBtnClick2() {
+        
+    }
 
     //游戏规则点击
     ruleBtnClick() {
         console.log("游戏规则点击");
-
         let ruleContent = this.node.getChildByName('ruleContent');
         ruleContent.removeAllChildren();
 
-        let ruleDialogPrefab = cc.instantiate(this.ruleDialogPrefab);
-        ruleContent.addChild(ruleDialogPrefab);
+        let ruleDialog = cc.instantiate(this.ruleDialogPrefab);
+        ruleContent.addChild(ruleDialog);
     }
 
+    showResultDialog() {
+        let resultDialogContent = this.node.getChildByName('resultDialogContent');
+        resultDialogContent.removeAllChildren();
+
+        let resultDialog = cc.instantiate(this.resultDialogPrefab);
+        resultDialogContent.addChild(resultDialog);
+    }
 
     //游戏开始点击
     gameBeginClick() {
