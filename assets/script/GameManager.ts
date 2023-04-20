@@ -1,4 +1,4 @@
-import CommonUtil, { ItemType } from "./CommonUtil";
+import CommonUtil, { GameOverType, ItemType } from "./CommonUtil";
 import ItemNode from "./ItemNode";
 
 const {ccclass, property} = cc._decorator;
@@ -31,6 +31,7 @@ export default class GameManager extends cc.Component {
 
     clickErrCount = 0;//累计点击错误次数
     clickErrMaxCount = 3;//最大允许点击错误次数
+    clickSuccessCount = 8;//判定是否成功的最低选中次数
 
     isPlaying = false;//游戏是否进行中
 
@@ -42,7 +43,9 @@ export default class GameManager extends cc.Component {
     itemCount = 0;
     itemIdIndex = 0;
 
-    // onLoad () {}
+    onLoad () {
+
+    }
 
     start () {
         this.initGame();
@@ -90,13 +93,19 @@ export default class GameManager extends cc.Component {
         this.isPlaying = true;
     }
 
-    finishGame() {
+    finishGame(gemeOverType: GameOverType) {
         this.isPlaying = false;
+        //弹出弹窗 改成发通知方式
+
+        if(GameOverType.timeOver) {
+
+        }
     }
 
     clickItemCb(itemId:string) {
         //点击item后进行销毁
         if(!this.isPlaying) return;
+        this.clickTime = 0;
         let item:ItemNode = this.itemMap[itemId];
         if(item) {
             if(item.itemType === this.chooseItemType) {
@@ -108,15 +117,16 @@ export default class GameManager extends cc.Component {
             } else {
                 this.clickErrCount++;
                 if(this.clickErrCount >= this.clickErrMaxCount) {
-                    this.finishGame();
+                    this.finishGame(GameOverType.clickFail);
                 }
-
                 //选择错误随机移动所有item位置
-                
             }
         }
-        // this.itemMap[itemId] as ItemNode = ;
+    }
 
+    destoryOneItem(id) {
+        delete this.itemMap[id];
+        this.itemCount--;
     }
 
     update (dt:number) {
@@ -124,14 +134,14 @@ export default class GameManager extends cc.Component {
         this.clickTime += dt;
         //游戏超过10秒没操作游戏结束
         if(this.clickTime >= 10) {
-            this.finishGame();
+            this.finishGame(GameOverType.longTimeNoClick);
         }
 
         //倒计时结束
         this.gameTime -= dt;
         if(this.gameTime <= 0) {
             this.timeLabel.string = `${0}秒`;
-            this.finishGame();
+            this.finishGame(GameOverType.timeOver);
         } else {
             this.timeLabel.string = `${Math.floor(this.gameTime)}秒`;
         }
@@ -144,7 +154,7 @@ export default class GameManager extends cc.Component {
             if(this.itemCount < this.maxItemCount) {
                 let itemNode = cc.instantiate(this.itemNodePrefab);
                 let item = itemNode.getComponent(ItemNode);
-                item.initGame(this.chooseItemType, this.clickItemCb);
+                item.initGame(this.chooseItemType, this.clickItemCb.bind(this), this);
                 this.gameContent.addChild(itemNode);
                 
                 console.log('-----生成了一个', this.itemCount);
@@ -158,21 +168,5 @@ export default class GameManager extends cc.Component {
                 item.id = `id${this.itemIdIndex}`;
             }
         }
-
-        // //每一帧进行位移
-        // for (const id in this.itemMap) {
-        //     const item:ItemNode = this.itemMap[id];
-
-        //     //需要判断item状态
-        //     item.node.x += item.moveSpeed * dt;
-        //     //移出屏幕外的进行销毁
-        //     if(item.node.x > this.gameContent.width / 2 + item.node.width / 2 + 50) {
-        //         item.node.removeFromParent();
-        //         delete this.itemMap[id];
-        //         this.itemCount--;
-        //     }
-        // }
     }
-
-
 }

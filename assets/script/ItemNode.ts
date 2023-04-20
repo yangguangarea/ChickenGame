@@ -1,4 +1,5 @@
 import CommonUtil, { ItemType } from "./CommonUtil";
+import GameManager from "./GameManager";
 
 const {ccclass, property} = cc._decorator;
 
@@ -17,33 +18,50 @@ export default class ItemNode extends cc.Component {
     clickCallBack:Function = null;//点击后的回调函数
 
     id = '';
+    gameManager:GameManager = null;
+
+    isDead:boolean = false;//是否处于点中销毁过程
+
+    onLoad() {
+        // this.node.on(cc.Node.EventType.TOUCH_START, this.onTouchStart, this);
+    }
+    onDestroy() {
+        // this.node.off(cc.Node.EventType.TOUCH_START, this.onTouchStart, this);
+    }
 
     start () {
 
     }
 
     
-    initGame(itemType:ItemType, cb:Function) {
+    initGame(itemType:ItemType, cb:Function, gameManager:GameManager) {
         this.itemType = itemType;
         this.clickCallBack = cb;
         this.itemChangelai.active = false;
         this.itemChangewang.active = false;
+        this.gameManager = gameManager;
         // 2-6秒移动至屏幕右侧  750/6----750/2
         this.moveSpeed = CommonUtil.randomNumber(Math.floor(750/6), Math.floor(750/2));
-        if(itemType === ItemType.changlai) {
+
+
+        if(CommonUtil.randomNumber(1, 2) === 1) {
+            this.itemType = ItemType.changlai;
             this.itemChangelai.active = true;
         } else {
+            this.itemType = ItemType.changwang;
             this.itemChangewang.active = true;
         }
     }
 
     click() {
+        console.log("-----点中了", this.itemType);
         this.clickCallBack && this.clickCallBack(this.id);
     }
 
 
     chooseCorrect() {
-        this.node.runAction(cc.sequence(cc.fadeOut(0.5), cc.callFunc(()=> {
+        this.isDead = true;
+        this.node.runAction(cc.sequence(cc.fadeOut(0.2), cc.callFunc(()=> {
             this.node.destroy();
         })));
     }
@@ -52,9 +70,23 @@ export default class ItemNode extends cc.Component {
 
     }
 
-    // update(dt: number) {
-    //     //当从屏幕左侧移动到右侧时，自动销毁
+    update(dt: number) {
+        //当从屏幕左侧移动到右侧时，自动销毁
+        if(!this.gameManager || !this.gameManager.isPlaying) return;
+        if(this.isDead) return;
 
-    // }
+        //每一帧进行位移
+        this.node.x += this.moveSpeed * dt;
+        //移出屏幕外的进行销毁
+        if(this.node.x > this.gameManager.gameContent.width / 2 + this.node.width / 2 + 50) {
+            if(this.isDead) {
+
+            } else {
+                this.gameManager.destoryOneItem(this.id);
+                this.node.removeFromParent();
+            }
+
+        }
+    }
 
 }

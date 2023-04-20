@@ -1,4 +1,5 @@
 import AudioManager from "./AudioManager";
+import EventManager from "./EventManager";
 import GameManager from "./GameManager";
 
 const {ccclass, property} = cc._decorator;
@@ -24,13 +25,20 @@ export default class MainScene extends cc.Component {
 
     gameManagerNode:cc.Node = null;
 
-    // onLoad () {}
+    onLoad () {
+        // EventManager.addListener(NOTI_NAME.XXX,this.xxx,this);
+    }
+    onDestroy() {
+        // EventManager.removeListener(NOTI_NAME.XXX,this.xxx,this);
+    }
 
     start () {
         //默认播放音乐
         // setTimeout(() => {
         //     this.musicBtnClick();
         // }, 1000);
+
+        this.loadingLayerAni();
     }
 
     // update (dt) {}
@@ -42,6 +50,12 @@ export default class MainScene extends cc.Component {
     testBtnClick2() {
         
     }
+
+    loadingLayerAni() {
+        let btnBegin = this.node.getChildByName('loadLayer').getChildByName('btnBegin');
+        btnBegin.runAction(cc.sequence(cc.scaleTo(0.3, 1.1), cc.scaleTo(0.3, 1)).repeatForever());
+    }
+
 
     //游戏规则点击
     ruleBtnClick() {
