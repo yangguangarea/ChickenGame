@@ -1,4 +1,5 @@
-import CommonUtil, { GameOverType, ItemType } from "./CommonUtil";
+import CommonUtil, { GameOverType, ItemType, NOTI_NAME } from "./CommonUtil";
+import EventManager from "./EventManager";
 import ItemNode from "./ItemNode";
 
 const {ccclass, property} = cc._decorator;
@@ -20,6 +21,16 @@ export default class GameManager extends cc.Component {
 
     @property(cc.Label)
     scoreLabel: cc.Label = null;
+
+    @property(cc.Node)
+    changlaiTipNode: cc.Node = null;
+
+    @property(cc.Node)
+    changwangTipNode: cc.Node = null;
+
+    @property(cc.Node)
+    gameStartTip: cc.Node = null;
+    
 
     chooseItemType:ItemType = ItemType.changlai;//选择点击的常来常往类型
 
@@ -67,26 +78,47 @@ export default class GameManager extends cc.Component {
         //     this.startGame();
         // })));
 
+        this.checkTickTime = 0;
+
         //清除所有存在的item
         this.gameContent.removeAllChildren();
         this.itemMap = {};
         this.itemCount = 0;
         this.itemIdIndex = 0;
-
+        
+        this.readyTip();
     }
 
     chooseChanglai() {
-        this.chooseItemType = ItemType.changlai;
-        this.readyBegin.active = false;
-        this.startGame();
+        // this.chooseItemType = ItemType.changlai;
+        // this.readyBegin.active = false;
+        // this.startGame();
     }
 
     chooseChangwang() {
-        this.chooseItemType = ItemType.changwang;
-        this.readyBegin.active = false;
-        this.startGame();
+        //目前都是常来
+        // this.chooseItemType = ItemType.changwang;
+        // this.readyBegin.active = false;
+        // this.startGame();
     }
 
+    //进入游戏界面后常来常往先位移进场，然后1s后显示游戏开始提示，然后startGame
+    readyTip() {
+        this.readyBegin.active = true;
+        this.changlaiTipNode.x = -570;
+        this.changlaiTipNode.runAction(cc.moveTo(0.6, cc.v2(-180, this.changlaiTipNode.y)).easing(cc.easeCubicActionOut()));
+
+        this.changwangTipNode.x = 570;
+        this.changwangTipNode.runAction(cc.moveTo(0.6, cc.v2(180, this.changwangTipNode.y)).easing(cc.easeCubicActionOut()));
+
+        this.gameStartTip.opacity = 0;
+
+        this.gameStartTip.runAction(cc.sequence(cc.delayTime(1.8), cc.fadeIn(0.3), cc.delayTime(1), cc.callFunc(()=> {
+            this.readyBegin.active = false;
+            this.chooseItemType = ItemType.changlai;
+            this.startGame();
+        })));
+    }
 
     //开始游戏
     startGame() {
@@ -96,9 +128,20 @@ export default class GameManager extends cc.Component {
     finishGame(gemeOverType: GameOverType) {
         this.isPlaying = false;
         //弹出弹窗 改成发通知方式
-
-        if(GameOverType.timeOver) {
-
+        if(gemeOverType === GameOverType.timeOver) {
+            if(this.score >= this.clickSuccessCount) {
+                EventManager.dispatchEvent(NOTI_NAME.SHOW_RESULT_DIALOG, this.score, this.clickSuccessCount, GameOverType.success);
+            } else {
+                EventManager.dispatchEvent(NOTI_NAME.SHOW_RESULT_DIALOG, this.score, this.clickSuccessCount, GameOverType.timeOver);
+            }
+        } else if(gemeOverType === GameOverType.longTimeNoClick) {
+            if(this.score >= this.clickSuccessCount) {
+                EventManager.dispatchEvent(NOTI_NAME.SHOW_RESULT_DIALOG, this.score, this.clickSuccessCount, GameOverType.success);
+            } else if(this.score === 0) {
+                EventManager.dispatchEvent(NOTI_NAME.SHOW_RESULT_DIALOG, this.score, this.clickSuccessCount, GameOverType.longTimeNoClick);
+            } else {
+                EventManager.dispatchEvent(NOTI_NAME.SHOW_RESULT_DIALOG, this.score, this.clickSuccessCount, GameOverType.timeOver);
+            }
         }
     }
 
@@ -114,10 +157,11 @@ export default class GameManager extends cc.Component {
                 this.itemCount--;
                 item.chooseCorrect();
                 this.score++;
+                this.scoreLabel.string = `x${this.score}`;
             } else {
                 this.clickErrCount++;
                 if(this.clickErrCount >= this.clickErrMaxCount) {
-                    this.finishGame(GameOverType.clickFail);
+                    // this.finishGame(GameOverType.clickFail);
                 }
                 //选择错误随机移动所有item位置
             }
@@ -157,7 +201,7 @@ export default class GameManager extends cc.Component {
                 item.initGame(this.chooseItemType, this.clickItemCb.bind(this), this);
                 this.gameContent.addChild(itemNode);
                 
-                console.log('-----生成了一个', this.itemCount);
+                // console.log('-----生成了一个', this.itemCount);
                 //初始化位置
                 itemNode.x = -(itemNode.width / 2 + 30 + this.gameContent.width / 2);
                 itemNode.y = CommonUtil.randomNumber(- this.gameContent.height / 2, this.gameContent.height / 2);

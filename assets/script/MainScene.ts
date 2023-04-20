@@ -1,6 +1,8 @@
 import AudioManager from "./AudioManager";
+import { GameOverType, NOTI_NAME } from "./CommonUtil";
 import EventManager from "./EventManager";
 import GameManager from "./GameManager";
+import ResultDialog from "./ResultDialog";
 
 const {ccclass, property} = cc._decorator;
 
@@ -26,10 +28,12 @@ export default class MainScene extends cc.Component {
     gameManagerNode:cc.Node = null;
 
     onLoad () {
-        // EventManager.addListener(NOTI_NAME.XXX,this.xxx,this);
+        EventManager.addListener(NOTI_NAME.SHOW_GAME_LAYER,this.showGameLayer,this);
+        EventManager.addListener(NOTI_NAME.SHOW_RESULT_DIALOG,this.showResultDialog,this);
     }
     onDestroy() {
-        // EventManager.removeListener(NOTI_NAME.XXX,this.xxx,this);
+        EventManager.removeListener(NOTI_NAME.SHOW_GAME_LAYER,this.showGameLayer,this);
+        EventManager.removeListener(NOTI_NAME.SHOW_RESULT_DIALOG,this.showResultDialog,this);
     }
 
     start () {
@@ -38,17 +42,24 @@ export default class MainScene extends cc.Component {
         //     this.musicBtnClick();
         // }, 1000);
 
+        let menuLayer = this.node.getChildByName('menuLayer');
+        menuLayer.getChildByName('btnRule1').active = true;
+        menuLayer.getChildByName('btnMusic1').active = true;
+        menuLayer.getChildByName('btnRule2').active = false;
+        menuLayer.getChildByName('btnMusic2').active = false;
         this.loadingLayerAni();
     }
 
     // update (dt) {}
 
     testBtnClick1() {
-        this.showResultDialog();
+        this.showResultDialog(10, 1, GameOverType.success);
+        
+        // this.showResultDialog(8, 1, GameOverType.longTimeNoClick);
     }
 
     testBtnClick2() {
-        
+        this.showResultDialog(9, 1, GameOverType.timeOver);
     }
 
     loadingLayerAni() {
@@ -67,19 +78,30 @@ export default class MainScene extends cc.Component {
         ruleContent.addChild(ruleDialog);
     }
 
-    showResultDialog() {
+    showResultDialog(score:number, clickSuccessCount:number, gemeOverType:GameOverType) {
         let resultDialogContent = this.node.getChildByName('resultDialogContent');
         resultDialogContent.removeAllChildren();
-
         let resultDialog = cc.instantiate(this.resultDialogPrefab);
+        resultDialog.getComponent(ResultDialog).initDialog(score, clickSuccessCount, gemeOverType);
         resultDialogContent.addChild(resultDialog);
     }
 
     //游戏开始点击
     gameBeginClick() {
         console.log("游戏开始点击");
+        this.showGameLayer();
+        // this.ruleBtnClick();
+    }
+
+    showGameLayer() {
         let loadLayer = this.node.getChildByName('loadLayer');
         loadLayer.active = false;
+        let menuLayer = this.node.getChildByName('menuLayer');
+        menuLayer.getChildByName('btnRule1').active = false;
+        menuLayer.getChildByName('btnMusic1').active = false;
+        menuLayer.getChildByName('btnRule2').active = true;
+        menuLayer.getChildByName('btnMusic2').active = true;
+
         let gameLayer = this.node.getChildByName('gameLayer');
         if(this.gameManagerNode) {
             gameLayer.active = true;

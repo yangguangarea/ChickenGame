@@ -7,6 +7,8 @@ export enum ItemType {
 
 export const NOTI_NAME = {
 	SHOW_TOAST: "SHOW_TOAST", //展示toast
+	SHOW_RESULT_DIALOG: "SHOW_RESULT_DIALOG",
+	SHOW_GAME_LAYER: "SHOW_GAME_LAYER",
 };
 
 export enum GameOverType {
