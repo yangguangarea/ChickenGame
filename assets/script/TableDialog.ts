@@ -101,6 +101,9 @@ export default class TableDialog extends cc.Component {
     }
 
     rotateTable() {
+        //todo //发送接口获取奖励
+
+
         //默认逆时针旋转
         let reward = '谢谢参与';
         let rewardMap = [1.68, 8.88, 2.68, 5.88, '谢谢参与', 16.88, 1.68, 2.68]

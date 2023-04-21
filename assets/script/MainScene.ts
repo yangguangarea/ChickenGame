@@ -3,6 +3,7 @@ import AudioManager from "./AudioManager";
 import { GameOverType, NOTI_NAME } from "./CommonUtil";
 import EventManager from "./EventManager";
 import GameManager from "./GameManager";
+import PrizeDialog from "./PrizeDialog";
 import ResultDialog from "./ResultDialog";
 import TableDialog from "./TableDialog";
 
@@ -22,7 +23,10 @@ export default class MainScene extends cc.Component {
 
     @property(cc.Prefab)
     adsDialogPrefab: cc.Prefab = null;
-    
+
+    @property(cc.Prefab)
+    prizeDialogPrefab: cc.Prefab = null;
+
     //游戏节点
     @property(cc.Prefab)
     gameManagerPrefab: cc.Prefab = null;
@@ -40,6 +44,7 @@ export default class MainScene extends cc.Component {
         EventManager.addListener(NOTI_NAME.SHOW_RESULT_DIALOG,this.showResultDialog,this);
         EventManager.addListener(NOTI_NAME.SHOW_TABLE_DIALOG,this.showTableDialog,this);
         EventManager.addListener(NOTI_NAME.SHOW_ADS_DIALOG,this.showAdsDialog,this);
+        EventManager.addListener(NOTI_NAME.SHOW_PRIZE_DIALOG,this.showPrizeDialog,this);
         EventManager.addListener(NOTI_NAME.CLOSE_DIALOG,this.closeDialog,this);
     }
     onDestroy() {
@@ -47,11 +52,9 @@ export default class MainScene extends cc.Component {
         EventManager.removeListener(NOTI_NAME.SHOW_RESULT_DIALOG,this.showResultDialog,this);
         EventManager.removeListener(NOTI_NAME.SHOW_TABLE_DIALOG,this.showTableDialog,this);
         EventManager.removeListener(NOTI_NAME.SHOW_ADS_DIALOG,this.showAdsDialog,this);
+        EventManager.removeListener(NOTI_NAME.SHOW_PRIZE_DIALOG,this.showPrizeDialog,this);
         EventManager.removeListener(NOTI_NAME.CLOSE_DIALOG,this.closeDialog,this);
     }
-
-
-    
 
     start () {
         //默认播放音乐
@@ -70,14 +73,20 @@ export default class MainScene extends cc.Component {
     // update (dt) {}
 
     testBtnClick1() {
-        this.showResultDialog(10, 1, GameOverType.success);
+        // this.showResultDialog(10, 1, GameOverType.success);
+        EventManager.dispatchEvent(NOTI_NAME.SHOW_PRIZE_DIALOG, 'succNode', '2.44');
         
         // this.showResultDialog(8, 1, GameOverType.longTimeNoClick);
     }
 
     testBtnClick2() {
         // this.showResultDialog(9, 1, GameOverType.timeOver);
-        EventManager.dispatchEvent(NOTI_NAME.SHOW_TABLE_DIALOG);
+        // EventManager.dispatchEvent(NOTI_NAME.SHOW_TABLE_DIALOG);
+        // EventManager.dispatchEvent(NOTI_NAME.SHOW_PRIZE_DIALOG, 'failNode');
+        // EventManager.dispatchEvent(NOTI_NAME.SHOW_PRIZE_DIALOG, 'succNode', '2.44');
+        EventManager.dispatchEvent(NOTI_NAME.SHOW_PRIZE_DIALOG, 'recordNode', '2.44', '2024/4/3 11:55');
+
+        
     }
 
     loadingLayerAni() {
@@ -129,6 +138,18 @@ export default class MainScene extends cc.Component {
         adsDialog.getComponent(AdsDialog).initDialog();
         adsDialogContent.addChild(adsDialog);
     }
+    showPrizeDialog(type:string, param1, param2) {
+        let prizeDialogContent = this.node.getChildByName('prizeDialogContent');
+        // adsDialogContent.removeAllChildren();
+        for (const children of prizeDialogContent.children) {
+            children.destroy();
+        }
+        let prizeDialog = cc.instantiate(this.prizeDialogPrefab);
+        prizeDialog.getComponent(PrizeDialog).initDialog(type, param1, param2);
+        prizeDialogContent.addChild(prizeDialog);
+    }
+
+    
 
 
     closeDialog(dialogMap) {
@@ -136,6 +157,7 @@ export default class MainScene extends cc.Component {
         //     resultDialog: true,
         //     tableDialog: true,
         //     adsDialog: true,
+        //     prizeDialog: true,
         // }
         if(!dialogMap)return;
         if(dialogMap.resultDialog === true) {
@@ -153,6 +175,12 @@ export default class MainScene extends cc.Component {
         if(dialogMap.adsDialog === true) {
             let adsDialogContent = this.node.getChildByName('adsDialogContent');
             for (const children of adsDialogContent.children) {
+                children.destroy();
+            }
+        }
+        if(dialogMap.prizeDialog === true) {
+            let prizeDialogContent = this.node.getChildByName('prizeDialogContent');
+            for (const children of prizeDialogContent.children) {
                 children.destroy();
             }
         }

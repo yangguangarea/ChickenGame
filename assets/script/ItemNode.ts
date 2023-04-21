@@ -32,7 +32,6 @@ export default class ItemNode extends cc.Component {
     start () {
 
     }
-
     
     initGame(itemType:ItemType, cb:Function, gameManager:GameManager) {
         this.itemType = itemType;
@@ -42,7 +41,6 @@ export default class ItemNode extends cc.Component {
         this.gameManager = gameManager;
         // 2-6秒移动至屏幕右侧  750/6----750/2
         this.moveSpeed = CommonUtil.randomNumber(Math.floor(750/6), Math.floor(750/2));
-
 
         if(CommonUtil.randomNumber(1, 2) === 1) {
             this.itemType = ItemType.changlai;
@@ -57,7 +55,6 @@ export default class ItemNode extends cc.Component {
         console.log("-----点中了", this.itemType);
         this.clickCallBack && this.clickCallBack(this.id);
     }
-
 
     chooseCorrect() {
         this.isDead = true;
@@ -85,7 +82,6 @@ export default class ItemNode extends cc.Component {
                 this.gameManager.destoryOneItem(this.id);
                 this.node.removeFromParent();
             }
-
         }
     }
 
