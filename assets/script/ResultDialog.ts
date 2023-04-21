@@ -1,4 +1,5 @@
-import { GameOverType } from "./CommonUtil";
+import { GameOverType, NOTI_NAME } from "./CommonUtil";
+import EventManager from "./EventManager";
 
 const {ccclass, property} = cc._decorator;
 
@@ -40,7 +41,9 @@ export default class ResultDialog extends cc.Component {
     }
 
     initDialog(score:number, clickSuccessCount:number, gemeOverType:GameOverType) {
-
+        this.resultContent1.active = false;
+        this.resultContent2.active = false;
+        this.resultContent3.active = false;
         if(gemeOverType === GameOverType.success) {
             this.resultLabel.string = `恭喜你!凭一己之力，共发现${score}只常来，获得一次幸运抽奖机会!`;
             this.resultContent1.active = true;
@@ -51,5 +54,20 @@ export default class ResultDialog extends cc.Component {
             this.resultLabel.string = `挑战失败! 你一共发现${score}只常来，不要泄气，再来一局吧~`;
             this.resultContent3.active = true;
         }
+    }
+
+    againBtnClick() {
+        EventManager.dispatchEvent(NOTI_NAME.INIT_GAME);
+        EventManager.dispatchEvent(NOTI_NAME.CLOSE_DIALOG, {
+            resultDialog: true,
+            tableDialog: true,
+        });
+    }
+
+    tableBtnClick() {
+        EventManager.dispatchEvent(NOTI_NAME.CLOSE_DIALOG, {
+            resultDialog: true,
+        });
+        EventManager.dispatchEvent(NOTI_NAME.SHOW_TABLE_DIALOG);
     }
 }

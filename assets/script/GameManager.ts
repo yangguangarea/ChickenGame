@@ -55,7 +55,11 @@ export default class GameManager extends cc.Component {
     itemIdIndex = 0;
 
     onLoad () {
+        EventManager.addListener(NOTI_NAME.INIT_GAME,this.initGame,this);
+    }
 
+    onDestroy() {
+        EventManager.removeListener(NOTI_NAME.INIT_GAME,this.initGame,this);
     }
 
     start () {

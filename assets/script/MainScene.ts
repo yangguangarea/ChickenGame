@@ -3,6 +3,7 @@ import { GameOverType, NOTI_NAME } from "./CommonUtil";
 import EventManager from "./EventManager";
 import GameManager from "./GameManager";
 import ResultDialog from "./ResultDialog";
+import TableDialog from "./TableDialog";
 
 const {ccclass, property} = cc._decorator;
 
@@ -14,6 +15,9 @@ export default class MainScene extends cc.Component {
 
     @property(cc.Prefab)
     resultDialogPrefab: cc.Prefab = null;
+
+    @property(cc.Prefab)
+    tableDialogPrefab: cc.Prefab = null;
     
     //游戏节点
     @property(cc.Prefab)
@@ -30,10 +34,17 @@ export default class MainScene extends cc.Component {
     onLoad () {
         EventManager.addListener(NOTI_NAME.SHOW_GAME_LAYER,this.showGameLayer,this);
         EventManager.addListener(NOTI_NAME.SHOW_RESULT_DIALOG,this.showResultDialog,this);
+        EventManager.addListener(NOTI_NAME.SHOW_TABLE_DIALOG,this.showTableDialog,this);
+        
+
+        EventManager.addListener(NOTI_NAME.CLOSE_DIALOG,this.closeDialog,this);
     }
     onDestroy() {
         EventManager.removeListener(NOTI_NAME.SHOW_GAME_LAYER,this.showGameLayer,this);
         EventManager.removeListener(NOTI_NAME.SHOW_RESULT_DIALOG,this.showResultDialog,this);
+        EventManager.removeListener(NOTI_NAME.SHOW_TABLE_DIALOG,this.showTableDialog,this);
+
+        EventManager.removeListener(NOTI_NAME.CLOSE_DIALOG,this.closeDialog,this);
     }
 
     start () {
@@ -59,14 +70,14 @@ export default class MainScene extends cc.Component {
     }
 
     testBtnClick2() {
-        this.showResultDialog(9, 1, GameOverType.timeOver);
+        // this.showResultDialog(9, 1, GameOverType.timeOver);
+        EventManager.dispatchEvent(NOTI_NAME.SHOW_TABLE_DIALOG);
     }
 
     loadingLayerAni() {
         let btnBegin = this.node.getChildByName('loadLayer').getChildByName('btnBegin');
         btnBegin.runAction(cc.sequence(cc.scaleTo(0.3, 1.1), cc.scaleTo(0.3, 1)).repeatForever());
     }
-
 
     //游戏规则点击
     ruleBtnClick() {
@@ -86,6 +97,30 @@ export default class MainScene extends cc.Component {
         resultDialogContent.addChild(resultDialog);
     }
 
+    showTableDialog() {
+        let tableDialogContent = this.node.getChildByName('tableDialogContent');
+        tableDialogContent.removeAllChildren();
+        let tableDialog = cc.instantiate(this.tableDialogPrefab);
+        tableDialog.getComponent(TableDialog).initDialog();
+        tableDialogContent.addChild(tableDialog);
+    }
+
+    closeDialog(dialogMap) {
+        // let dialogMap = {
+        //     resultDialog: true,
+        //     tableDialog: true,
+        // }
+        if(!dialogMap)return;
+        if(dialogMap.resultDialog === true) {
+            let resultDialogContent = this.node.getChildByName('resultDialogContent');
+            resultDialogContent.removeAllChildren();
+        }
+        if(dialogMap.tableDialog === true) {
+            let tableDialogContent = this.node.getChildByName('tableDialogContent');
+            tableDialogContent.removeAllChildren();
+        }
+    }
+    
     //游戏开始点击
     gameBeginClick() {
         console.log("游戏开始点击");
@@ -102,6 +137,11 @@ export default class MainScene extends cc.Component {
         menuLayer.getChildByName('btnRule2').active = true;
         menuLayer.getChildByName('btnMusic2').active = true;
 
+        let resultDialogContent = this.node.getChildByName('resultDialogContent');
+        resultDialogContent.removeAllChildren();
+        let tableDialogContent = this.node.getChildByName('tableDialogContent');
+        tableDialogContent.removeAllChildren();
+
         let gameLayer = this.node.getChildByName('gameLayer');
         if(this.gameManagerNode) {
             gameLayer.active = true;
@@ -113,6 +153,7 @@ export default class MainScene extends cc.Component {
             gameLayer.addChild(this.gameManagerNode);
         }
     }
+
 
 
     //音乐开关点击
