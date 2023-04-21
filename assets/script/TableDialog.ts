@@ -1,4 +1,5 @@
-import { GameOverType } from "./CommonUtil";
+import { GameOverType, NOTI_NAME } from "./CommonUtil";
+import EventManager from "./EventManager";
 
 const {ccclass, property} = cc._decorator;
 
@@ -13,6 +14,17 @@ export default class TableDialog extends cc.Component {
     
 
     isStartReward: boolean = false;//是否处于抽奖
+
+    onLoad () {
+        EventManager.addListener(NOTI_NAME.ROTATE_TABLE,this.rotateTable,this);
+        EventManager.addListener(NOTI_NAME.TABLE_DIALOG_VISIBLE,this.setContentVisible,this);
+        
+    }
+
+    onDestroy() {
+        EventManager.removeListener(NOTI_NAME.ROTATE_TABLE,this.rotateTable,this);
+        EventManager.removeListener(NOTI_NAME.TABLE_DIALOG_VISIBLE,this.setContentVisible,this);
+    }
 
     start () {
         let content = this.node.getChildByName('content');
@@ -84,15 +96,15 @@ export default class TableDialog extends cc.Component {
 
     //抽奖
     drawBtnClick() {
-        //先打开市民贷10秒倒计时弹窗
-        //关闭弹窗，转盘开始转
+        //先打开市民贷
+        EventManager.dispatchEvent(NOTI_NAME.SHOW_ADS_DIALOG);
+    }
 
+    rotateTable() {
         //默认逆时针旋转
-
-        // 360/16
-        let reward = '16.88';
+        let reward = '谢谢参与';
         let rewardMap = [1.68, 8.88, 2.68, 5.88, '谢谢参与', 16.88, 1.68, 2.68]
-
+        this.tableNode.angle = 0;
         let rotate = 0;
         for (let i = 0; i < rewardMap.length; i++) {
             if(`${rewardMap[i]}` === `${reward}`) {
@@ -108,6 +120,12 @@ export default class TableDialog extends cc.Component {
             //弹出中奖金额弹窗
             this.isStartReward = false;
         })));
+    }
+
+
+    setContentVisible(visible:boolean) {
+        console.log("-----设置了可见度", !!visible ? 255 : 0);
+        this.node.getChildByName('content').opacity = !!visible ? 255 : 0;
     }
 
     //了解贷款

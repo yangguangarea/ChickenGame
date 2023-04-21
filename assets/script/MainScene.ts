@@ -1,3 +1,4 @@
+import AdsDialog from "./AdsDialog";
 import AudioManager from "./AudioManager";
 import { GameOverType, NOTI_NAME } from "./CommonUtil";
 import EventManager from "./EventManager";
@@ -18,6 +19,9 @@ export default class MainScene extends cc.Component {
 
     @property(cc.Prefab)
     tableDialogPrefab: cc.Prefab = null;
+
+    @property(cc.Prefab)
+    adsDialogPrefab: cc.Prefab = null;
     
     //游戏节点
     @property(cc.Prefab)
@@ -35,17 +39,19 @@ export default class MainScene extends cc.Component {
         EventManager.addListener(NOTI_NAME.SHOW_GAME_LAYER,this.showGameLayer,this);
         EventManager.addListener(NOTI_NAME.SHOW_RESULT_DIALOG,this.showResultDialog,this);
         EventManager.addListener(NOTI_NAME.SHOW_TABLE_DIALOG,this.showTableDialog,this);
-        
-
+        EventManager.addListener(NOTI_NAME.SHOW_ADS_DIALOG,this.showAdsDialog,this);
         EventManager.addListener(NOTI_NAME.CLOSE_DIALOG,this.closeDialog,this);
     }
     onDestroy() {
         EventManager.removeListener(NOTI_NAME.SHOW_GAME_LAYER,this.showGameLayer,this);
         EventManager.removeListener(NOTI_NAME.SHOW_RESULT_DIALOG,this.showResultDialog,this);
         EventManager.removeListener(NOTI_NAME.SHOW_TABLE_DIALOG,this.showTableDialog,this);
-
+        EventManager.removeListener(NOTI_NAME.SHOW_ADS_DIALOG,this.showAdsDialog,this);
         EventManager.removeListener(NOTI_NAME.CLOSE_DIALOG,this.closeDialog,this);
     }
+
+
+    
 
     start () {
         //默认播放音乐
@@ -83,15 +89,20 @@ export default class MainScene extends cc.Component {
     ruleBtnClick() {
         console.log("游戏规则点击");
         let ruleContent = this.node.getChildByName('ruleContent');
-        ruleContent.removeAllChildren();
-
+        // ruleContent.removeAllChildren();
+        for (const children of ruleContent.children) {
+            children.destroy();
+        }
         let ruleDialog = cc.instantiate(this.ruleDialogPrefab);
         ruleContent.addChild(ruleDialog);
     }
 
     showResultDialog(score:number, clickSuccessCount:number, gemeOverType:GameOverType) {
         let resultDialogContent = this.node.getChildByName('resultDialogContent');
-        resultDialogContent.removeAllChildren();
+        // resultDialogContent.removeAllChildren();
+        for (const children of resultDialogContent.children) {
+            children.destroy();
+        }
         let resultDialog = cc.instantiate(this.resultDialogPrefab);
         resultDialog.getComponent(ResultDialog).initDialog(score, clickSuccessCount, gemeOverType);
         resultDialogContent.addChild(resultDialog);
@@ -99,25 +110,51 @@ export default class MainScene extends cc.Component {
 
     showTableDialog() {
         let tableDialogContent = this.node.getChildByName('tableDialogContent');
-        tableDialogContent.removeAllChildren();
+        // tableDialogContent.removeAllChildren();
+        for (const children of tableDialogContent.children) {
+            children.destroy();
+        }
         let tableDialog = cc.instantiate(this.tableDialogPrefab);
         tableDialog.getComponent(TableDialog).initDialog();
         tableDialogContent.addChild(tableDialog);
     }
 
+    showAdsDialog() {
+        let adsDialogContent = this.node.getChildByName('adsDialogContent');
+        // adsDialogContent.removeAllChildren();
+        for (const children of adsDialogContent.children) {
+            children.destroy();
+        }
+        let adsDialog = cc.instantiate(this.adsDialogPrefab);
+        adsDialog.getComponent(AdsDialog).initDialog();
+        adsDialogContent.addChild(adsDialog);
+    }
+
+
     closeDialog(dialogMap) {
         // let dialogMap = {
         //     resultDialog: true,
         //     tableDialog: true,
+        //     adsDialog: true,
         // }
         if(!dialogMap)return;
         if(dialogMap.resultDialog === true) {
             let resultDialogContent = this.node.getChildByName('resultDialogContent');
-            resultDialogContent.removeAllChildren();
+            for (const children of resultDialogContent.children) {
+                children.destroy();
+            }
         }
         if(dialogMap.tableDialog === true) {
             let tableDialogContent = this.node.getChildByName('tableDialogContent');
-            tableDialogContent.removeAllChildren();
+            for (const children of tableDialogContent.children) {
+                children.destroy();
+            }
+        }
+        if(dialogMap.adsDialog === true) {
+            let adsDialogContent = this.node.getChildByName('adsDialogContent');
+            for (const children of adsDialogContent.children) {
+                children.destroy();
+            }
         }
     }
     
@@ -137,10 +174,10 @@ export default class MainScene extends cc.Component {
         menuLayer.getChildByName('btnRule2').active = true;
         menuLayer.getChildByName('btnMusic2').active = true;
 
-        let resultDialogContent = this.node.getChildByName('resultDialogContent');
-        resultDialogContent.removeAllChildren();
-        let tableDialogContent = this.node.getChildByName('tableDialogContent');
-        tableDialogContent.removeAllChildren();
+        EventManager.dispatchEvent(NOTI_NAME.CLOSE_DIALOG, {
+            resultDialog: true,
+            tableDialog: true,
+        });
 
         let gameLayer = this.node.getChildByName('gameLayer');
         if(this.gameManagerNode) {
