@@ -1,0 +1,237 @@
+html {
+	-ms-touch-action: none;
+	height: 100%;
+}
+
+body,
+canvas,
+div {
+	display: block;
+	outline: none;
+	-webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+
+	user-select: none;
+	-moz-user-select: none;
+	-webkit-user-select: none;
+	-ms-user-select: none;
+	-khtml-user-select: none;
+	-webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+}
+
+/* Remove spin of input type number */
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+	/* display: none; <- Crashes Chrome on hover */
+	-webkit-appearance: none;
+	margin: 0; /* <-- Apparently some margin are still there even though it's hidden */
+}
+
+body {
+	/* position: absolute;
+	top: 0;
+	left: 0; */
+	width: 100%;
+	height: 100%;
+	padding: 0;
+	border: 0;
+	margin: 0;
+
+	cursor: default;
+	color: #888;
+	/* background-color: #3dc5de; */
+
+	text-align: center;
+	font-family: Helvetica, Verdana, Arial, sans-serif;
+
+	display: flex;
+	flex-direction: column;
+
+	/* fix bug: https://github.com/cocos-creator/2d-tasks/issues/791 */
+	/* overflow cannot be applied in Cocos2dGameContainer, 
+  otherwise child elements will be hidden when Cocos2dGameContainer rotated 90 deg */
+	overflow: hidden;
+}
+
+#Cocos2dGameContainer {
+	position: absolute;
+	margin: 0;
+	left: 0px;
+	top: 0px;
+
+	display: -webkit-box;
+	-webkit-box-orient: horizontal;
+	-webkit-box-align: center;
+	-webkit-box-pack: center;
+}
+
+canvas {
+	background-color: rgba(0, 0, 0, 0);
+}
+
+a:link,
+a:visited {
+	color: #666;
+}
+
+a:active,
+a:hover {
+	color: #666;
+}
+
+p.header {
+	font-size: small;
+}
+
+p.footer {
+	font-size: x-small;
+}
+
+#splash {
+	position: absolute;
+	top: 0;
+	left: 0;
+	width: 100%;
+	height: 100%;
+	background-image: radial-gradient(circle, #15a3fe 60%, #0d65ee 100%);
+}
+
+#splash .splash-center {
+	margin-top: 0%;
+	margin-bottom: 0%;
+}
+
+#splash .splash-center .titlecontainer {
+	width: 100%;
+	position: absolute;
+	overflow: hidden;
+}
+
+.titlebracket {
+	margin-top: 170%;
+}
+
+.title {
+	width: 100%;
+	height: 100%;
+	position: absolute;
+	top: 0;
+	/* background-image: url(./loading_title.png); */
+	background-repeat: no-repeat;
+	background-size: 100% 100%;
+	margin: 0 auto;
+}
+
+.logo {
+	width: 100%;
+	height: 100%;
+	position: absolute;
+	top: 0;
+	/* background-image: url(./loading_logo.png); */
+	background-repeat: no-repeat;
+	background-size: 100% 100%;
+	margin: 0 auto;
+}
+
+.play {
+	width: 100%;
+	height: 100%;
+	position: absolute;
+	top: 0;
+	/* background-image: url(./loading_play.png); */
+	background-repeat: no-repeat;
+	background-size: 100% 100%;
+	margin: 0 auto;
+}
+
+#splash .splash-center .housecontainer {
+	width: 100%;
+	position: absolute;
+	overflow: hidden;
+	bottom: 0;
+}
+.housebracket {
+	margin-top: 96%;
+}
+
+.house {
+	width: 100%;
+	height: 100%;
+	position: absolute;
+	bottom: 0;
+	background-image: url(./loading_img_house.png);
+	background-repeat: no-repeat;
+	background-size: 100% 100%;
+	margin: 0 auto;
+}
+
+#splash .splash-center .progresscontainer {
+	width: 100%;
+	position: absolute;
+	overflow: hidden;
+	bottom: 10%;
+}
+.progressbracket {
+	margin-top: 100px;
+}
+
+.progress-bar {
+	position: relative;
+	height: 45px;
+	width: 300px;
+	/* bottom: 15%; */
+	background-image: url(./loading_progress.png);
+	background-size: 300px 45px;
+	background-repeat: no-repeat;
+	margin: 0 auto 15% auto;
+}
+.progress-bar span {
+	display: block;
+	position: absolute;
+	height: 12px;
+	width: 270px;
+	bottom: 25%;
+	left: 1%;
+	text-align: center;
+	transition: width 0.4s ease-in-out;
+	background-image: url(./loading_complete.png);
+	background-size: 270px 12px;
+	background-repeat: no-repeat;
+}
+
+/* 74 81 */
+.coin {
+	width: 41px;
+	height: 46px;
+	position: absolute;
+	bottom: 7%;
+	right: 0%;
+	background-image: url(./loading_coin.png);
+	background-repeat: no-repeat;
+	background-size: 41px 46px;
+	/* margin: 0 auto; */
+}
+
+.stripes span {
+	/* background-size: 30px 30px;
+	background-image: linear-gradient(
+		135deg,
+		rgba(255, 255, 255, 0.15) 25%,
+		transparent 25%,
+		transparent 50%,
+		rgba(255, 255, 255, 0.15) 50%,
+		rgba(255, 255, 255, 0.15) 75%,
+		transparent 75%,
+		transparent
+	);
+
+	animation: animate-stripes 1s linear infinite; */
+}
+
+@keyframes animate-stripes {
+	0% {
+		background-position: 0 0;
+	}
+	100% {
+		background-position: 60px 0;
+	}
+}

@@ -1,0 +1,255 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+
+	<title>我的家</title>
+
+	<!--http://www.html5rocks.com/en/mobile/mobifying/-->
+	<meta name="viewport"
+				content="width=device-width,user-scalable=no,initial-scale=1, minimum-scale=1,maximum-scale=1"/>
+
+	<!--https://developer.apple.com/library/safari/documentation/AppleApplications/Reference/SafariHTMLRef/Articles/MetaTags.html-->
+	<meta name="apple-mobile-web-app-capable" content="yes">
+	<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+	<meta name="format-detection" content="telephone=no">
+
+	<!-- force webkit on 360 -->
+	<meta name="renderer" content="webkit"/>
+	<meta name="force-rendering" content="webkit"/>
+	<!-- force edge on IE -->
+	<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1"/>
+	<meta name="msapplication-tap-highlight" content="no">
+
+	<!-- force full screen on some browser -->
+	<meta name="full-screen" content="yes"/>
+	<meta name="x5-fullscreen" content="true"/>
+	<meta name="360-fullscreen" content="true"/>
+	
+	<!-- force screen orientation on some browser -->
+	<meta name="screen-orientation" content=""/>
+	<meta name="x5-orientation" content="">
+
+	<!--fix fireball/issues/3568 -->
+	<!--<meta name="browsermode" content="application">-->
+	<meta name="x5-page-mode" content="app">
+
+	<!--<link rel="apple-touch-icon" href=".png" />-->
+	<!--<link rel="apple-touch-icon-precomposed" href=".png" />-->
+	<script type="text/javascript">
+		var sdkObj = {
+			isIosApp: function () {
+				return /(iPhone|iPad|iPod|iOS)/i.test(navigator.userAgent);
+			},
+			getCookie: function () {
+				var arr,
+					reg = new RegExp("(^| )" + name + "=([^;]*)(;|$)");
+				if ((arr = document.cookie.match(reg)))
+					return unescape(arr[2]).replace(/\"/g, "");
+				else return null;
+			},
+			compareVersion: function (baseVersion, currentVersion) {
+				baseVersion = baseVersion.toString().split(".");
+				currentVersion = currentVersion.toString().split(".");
+
+				for (
+					var i = 0;
+					i < baseVersion.length || i < currentVersion.length;
+					i++
+				) {
+					var ver1 = parseInt(baseVersion[i], 10),
+						ver2 = parseInt(currentVersion[i], 10);
+					isNaN(ver1) && (ver1 = 0);
+					isNaN(ver2) && (ver2 = 0);
+					if (ver1 < ver2) {
+						return -1;
+					}
+					if (ver1 > ver2) {
+						return 1;
+					}
+				}
+				return 0;
+			},
+		};
+		function uuid(len, radix) {
+			var chars = "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz".split(
+				""
+			);
+			var uuid = [],
+				i;
+			radix = radix || chars.length;
+
+			if (len) {
+				for (i = 0; i < len; i++)
+					uuid[i] = chars[0 | (Math.random() * radix)];
+			} else {
+				var r;
+
+				uuid[8] = uuid[13] = uuid[18] = uuid[23] = "-";
+				uuid[14] = "4";
+
+				for (i = 0; i < 36; i++) {
+					if (!uuid[i]) {
+						r = 0 | (Math.random() * 16);
+						uuid[i] = chars[i == 19 ? (r & 0x3) | 0x8 : r];
+					}
+				}
+			}
+
+			return uuid.join("");
+		}
+
+		window.userUniId = uuid(16, 16);
+
+		window.performanceMark = (function () {
+			var timing = {};
+			return function performanceMark(name, time) {
+				if (typeof name !== "string") return;
+				timing[name] = time || Date.now();
+
+				var from = "";
+				if (
+					location.search !== "" &&
+					location.search.indexOf("from=") !== -1
+				) {
+					var endIndex = location.search.indexOf(
+						"&",
+						location.search.indexOf("from=")
+					);
+					endIndex =
+						endIndex != -1 ? endIndex : location.search.length;
+					from = location.search.substring(
+						location.search.indexOf("from=") + "from=".length,
+						endIndex
+					);
+				}
+				window.clickLog &&
+					window.clickLog(
+						"pref=" +
+							decodeURIComponent(
+								JSON.stringify({
+									pagetype: "wb_performance",
+									actiontype: "myhome",
+									id: window.userUniId,
+									name: name,
+									time: timing[name],
+									from: from,
+								})
+							)
+					);
+
+				return timing;
+			};
+		})();
+		performanceMark("head");
+	</script>
+	<link rel="stylesheet" type="text/css" href="style-mobile.css"/>
+	<script type="text/javascript">
+		performanceMark("mobile.css");
+	</script>
+	<link ref="preload" as="script" href="cocos2d-js-min.js" />
+</head>
+<body>
+	<canvas id="GameCanvas" oncontextmenu="event.preventDefault()" tabindex="0"></canvas>
+	<div id="splash">
+		<div class="panda"></div>
+		<div class="progress-container">
+			<div class="bar" style="width: 0%"></div>
+		</div>
+		<div id="tips" class="tips">每⽇登陆清扫装扮赚⾦币</div>
+	</div>
+	<script src="//a.58cdn.com.cn/app58/rms/app/js/app_30805.js?cachevers=810"></script>
+	<script src="//tracklog.58.com/referrer_m.js"></script>
+	<script>
+		var textList = [
+			'每⽇登录我的⼩家，清扫赢⼤奖',
+			'家⾥⻓时间没有打扫⼩助理可会⽣⽓的',
+			'多点点⼩助理有惊喜哦',
+			'⼲净的环境有利于身⼼健康哦',
+			'打扫房间得到的⾦币可以兑换奖品哦'
+		]
+		var result= Math.floor(Math.random() * textList.length);
+		document.getElementById('tips').innerHTML =  textList[result]
+		performanceMark("referrer_m-js");
+	</script>
+	<script type="text/javascript">
+		var fakeProgressCallback = function () {
+			var splash = document.getElementById("splash");
+			var progressBar = splash.querySelector(".bar");
+			if (progressBar) {
+				var currentPrecent = window.fakeProgressPrecent;
+				var precentStep = 3;
+				if (currentPrecent >= 0 && currentPrecent < 30) {
+					precentStep = 7;
+				} else if (currentPrecent >= 30 && currentPrecent < 50) {
+					precentStep = 3;
+				} else if (currentPrecent >= 50 && currentPrecent < 85) {
+					precentStep = 2;
+				} else {
+					precentStep = 1;
+				}
+				currentPrecent += precentStep;
+				if (currentPrecent >= 100) currentPrecent = 100;
+				window.fakeProgressPrecent = currentPrecent;
+				progressBar.style.width = currentPrecent.toFixed(2) + "%";
+			}
+		};
+		window.fakeProgressPrecent = 0;
+		window.fakeProgressTimer = setInterval(function () {
+			fakeProgressCallback();
+		}, 300);
+
+		var splash = document.getElementById("splash");
+		var progressBar = splash.querySelector(".bar");
+		if (progressBar) {
+			progressBar.style.width = window.fakeProgressPrecent.toFixed(2) + "%";
+			// splash.append(window.fakeProgressPrecent.toFixed(2) + "%");
+		}
+	</script>
+	<script src="src/settings.js" charset="utf-8"></script>
+	<script type="text/javascript">
+		performanceMark("cocos-settings-js");
+	</script>
+	<script src="main.js" charset="utf-8"></script>
+	<script type="text/javascript">
+		performanceMark("main-js");
+	</script>
+	<script src="cocos2d-js-min.js"></script>
+	<script type="text/javascript">
+	performanceMark("cocos2d-engine-js");
+	</script>
+	<script type="text/javascript">
+		(function () {
+			// open web debugger console
+			var debug = window._CCSettings.debug;
+			var splash = document.getElementById('splash');
+			splash.style.display = 'block';
+
+			function loadScript (moduleName, cb) {
+				function scriptLoaded () {
+						document.body.removeChild(domScript);
+						domScript.removeEventListener('load', scriptLoaded, false);
+						cb && cb();
+				};
+				var domScript = document.createElement('script');
+				domScript.async = true;
+				domScript.src = moduleName;
+				domScript.addEventListener('load', scriptLoaded, false);
+				document.body.appendChild(domScript);
+			}
+
+			if (debug) {
+				loadScript(debug ? "vconsole.min.js" : "", function () {
+					// open web debugger console
+					if (typeof VConsole !== "undefined") {
+						window.vConsole = new VConsole();
+					}
+					window.boot && window.boot();
+				});
+			} else {
+				window.boot && window.boot();
+			}
+		})();
+	</script>
+</body>
+</html>
