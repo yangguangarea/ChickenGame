@@ -54,7 +54,10 @@ export default class RuleDialog extends cc.Component {
         .to(0.3, {scale: 0},  {easing: 'quadOut'})
         .call(() => {
             // this.contentNode.scale = 1;
-            EventManager.dispatchEvent(NOTI_NAME.SHOW_GAME_LAYER);
+            
+            if(cc.director.getScene().getChildByName('Canvas').getChildByName('loadLayer').active) {
+                EventManager.dispatchEvent(NOTI_NAME.SHOW_GAME_LAYER);
+            }
             this.node.destroy();
         } )
         .start();

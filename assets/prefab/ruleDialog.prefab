@@ -299,7 +299,7 @@
   },
   {
     "__type__": "cc.Node",
-    "_name": "ruleDialog",
+    "_name": "ruleDialog_bg",
     "_objFlags": 0,
     "_parent": {
       "__id__": 6
@@ -324,8 +324,8 @@
     },
     "_contentSize": {
       "__type__": "cc.Size",
-      "width": 531,
-      "height": 969
+      "width": 626,
+      "height": 967
     },
     "_anchorPoint": {
       "__type__": "cc.Vec2",
@@ -377,7 +377,7 @@
     "_srcBlendFactor": 770,
     "_dstBlendFactor": 771,
     "_spriteFrame": {
-      "__uuid__": "9865fb90-f40a-4f2a-8bee-fbead97b13da"
+      "__uuid__": "a7abff65-c945-404c-932e-dc25887af101"
     },
     "_type": 0,
     "_sizeMode": 1,
@@ -401,7 +401,7 @@
     "asset": {
       "__id__": 0
     },
-    "fileId": "d0lr/kKPtDIbNrX6z3il96",
+    "fileId": "59BuHkPqFO8Jn9699liYTn",
     "sync": false
   },
   {
@@ -780,8 +780,8 @@
     },
     "_contentSize": {
       "__type__": "cc.Size",
-      "width": 71,
-      "height": 71
+      "width": 80,
+      "height": 82
     },
     "_anchorPoint": {
       "__type__": "cc.Vec2",
@@ -792,8 +792,8 @@
       "__type__": "TypedArray",
       "ctor": "Float64Array",
       "array": [
-        247.581,
-        440.43,
+        294.57,
+        427.188,
         0,
         0,
         0,
@@ -833,7 +833,7 @@
     "_srcBlendFactor": 770,
     "_dstBlendFactor": 771,
     "_spriteFrame": {
-      "__uuid__": "064f93ec-e267-4520-b969-4aebae1659f6"
+      "__uuid__": "0c10c132-cc81-4a49-922c-a5d9004dc614"
     },
     "_type": 0,
     "_sizeMode": 1,

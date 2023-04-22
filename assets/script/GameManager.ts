@@ -110,14 +110,14 @@ export default class GameManager extends cc.Component {
     readyTip() {
         this.readyBegin.active = true;
         this.changlaiTipNode.x = -570;
-        this.changlaiTipNode.runAction(cc.moveTo(0.6, cc.v2(-180, this.changlaiTipNode.y)).easing(cc.easeCubicActionOut()));
+        this.changlaiTipNode.runAction(cc.moveTo(0.6, cc.v2(-170, this.changlaiTipNode.y)).easing(cc.easeCubicActionOut()));
 
         this.changwangTipNode.x = 570;
-        this.changwangTipNode.runAction(cc.moveTo(0.6, cc.v2(180, this.changwangTipNode.y)).easing(cc.easeCubicActionOut()));
+        this.changwangTipNode.runAction(cc.moveTo(0.6, cc.v2(168, this.changwangTipNode.y)).easing(cc.easeCubicActionOut()));
 
         this.gameStartTip.opacity = 0;
 
-        this.gameStartTip.runAction(cc.sequence(cc.delayTime(1.8), cc.fadeIn(0.3), cc.delayTime(1), cc.callFunc(()=> {
+        this.gameStartTip.runAction(cc.sequence(cc.delayTime(0.5), cc.fadeIn(0.3), cc.delayTime(1.5), cc.callFunc(()=> {
             this.readyBegin.active = false;
             this.chooseItemType = ItemType.changlai;
             this.startGame();
@@ -214,6 +214,11 @@ export default class GameManager extends cc.Component {
                 this.itemIdIndex++;
                 this.itemMap[`id${this.itemIdIndex}`] = item;
                 item.id = `id${this.itemIdIndex}`;
+
+                //重新排序，y高的zindex小
+                this.gameContent.children.sort((a, b)=> {
+                    return b.y - a.y;
+                });
             }
         }
     }
