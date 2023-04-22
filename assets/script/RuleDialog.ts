@@ -5,6 +5,9 @@ const {ccclass, property} = cc._decorator;
 
 @ccclass
 export default class RuleDialog extends cc.Component {
+
+
+    isCloseStartGame = false;//关闭弹窗时是否开始游戏
     onLoad () {
 
     }
@@ -33,6 +36,12 @@ export default class RuleDialog extends cc.Component {
 
     }
 
+    initDialog(isCloseStartGame) {
+        if(isCloseStartGame === true) {
+            this.isCloseStartGame = true;
+        }
+    }
+
     closeBtnClick() {
         // console.log("----RuleDialog---closeBtnClick");
         // let content = this.node.getChildByName('content');
@@ -54,8 +63,7 @@ export default class RuleDialog extends cc.Component {
         .to(0.3, {scale: 0},  {easing: 'quadOut'})
         .call(() => {
             // this.contentNode.scale = 1;
-            
-            if(cc.director.getScene().getChildByName('Canvas').getChildByName('loadLayer').active) {
+            if(this.isCloseStartGame) {
                 EventManager.dispatchEvent(NOTI_NAME.SHOW_GAME_LAYER);
             }
             this.node.destroy();

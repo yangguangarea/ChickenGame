@@ -5,6 +5,7 @@ import EventManager from "./EventManager";
 import GameManager from "./GameManager";
 import PrizeDialog from "./PrizeDialog";
 import ResultDialog from "./ResultDialog";
+import RuleDialog from "./RuleDialog";
 import TableDialog from "./TableDialog";
 
 const {ccclass, property} = cc._decorator;
@@ -93,7 +94,7 @@ export default class MainScene extends cc.Component {
 
 
     //游戏规则点击
-    ruleBtnClick() {
+    ruleBtnClick(isCloseStartGame = false) {
         console.log("游戏规则点击");
         let ruleContent = this.node.getChildByName('ruleContent');
         // ruleContent.removeAllChildren();
@@ -101,6 +102,7 @@ export default class MainScene extends cc.Component {
             children.destroy();
         }
         let ruleDialog = cc.instantiate(this.ruleDialogPrefab);
+        ruleDialog.getComponent(RuleDialog).initDialog(isCloseStartGame);
         ruleContent.addChild(ruleDialog);
     }
 
@@ -184,8 +186,8 @@ export default class MainScene extends cc.Component {
     //游戏开始点击
     gameBeginClick() {
         console.log("游戏开始点击");
-        this.showGameLayer();
-        // this.ruleBtnClick();
+        // this.showGameLayer();
+        this.ruleBtnClick(true);
     }
 
     showGameLayer() {
