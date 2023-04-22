@@ -74,17 +74,19 @@ export default class MainScene extends cc.Component {
 
     testBtnClick1() {
         // this.showResultDialog(10, 1, GameOverType.success);
-        EventManager.dispatchEvent(NOTI_NAME.SHOW_PRIZE_DIALOG, 'succNode', '2.44');
-        
+        this.showResultDialog(9, 1, GameOverType.timeOver);
         // this.showResultDialog(8, 1, GameOverType.longTimeNoClick);
+        // EventManager.dispatchEvent(NOTI_NAME.SHOW_PRIZE_DIALOG, 'succNode', '2.44');
+        
+        
     }
 
     testBtnClick2() {
-        // this.showResultDialog(9, 1, GameOverType.timeOver);
+        
         // EventManager.dispatchEvent(NOTI_NAME.SHOW_TABLE_DIALOG);
         // EventManager.dispatchEvent(NOTI_NAME.SHOW_PRIZE_DIALOG, 'failNode');
         // EventManager.dispatchEvent(NOTI_NAME.SHOW_PRIZE_DIALOG, 'succNode', '2.44');
-        EventManager.dispatchEvent(NOTI_NAME.SHOW_PRIZE_DIALOG, 'recordNode', '2.44', '2024/4/3 11:55');
+        // EventManager.dispatchEvent(NOTI_NAME.SHOW_PRIZE_DIALOG, 'recordNode', '2.44', '2024/4/3 11:55');
 
         
     }

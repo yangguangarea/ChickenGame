@@ -1,4 +1,4 @@
-import { GameOverType, NOTI_NAME } from "./CommonUtil";
+import CommonUtil, { GameOverType, NOTI_NAME } from "./CommonUtil";
 import EventManager from "./EventManager";
 
 const {ccclass, property} = cc._decorator;
@@ -53,6 +53,18 @@ export default class ResultDialog extends cc.Component {
         } else if(gemeOverType === GameOverType.timeOver){
             this.resultLabel.string = `挑战失败! 你一共发现${score}只常来，不要泄气，再来一局吧~`;
             this.resultContent3.active = true;
+
+            let starContent = this.node.getChildByName('content').getChildByName('starContent');
+            for (const starNode of starContent.children) {
+                // starNode.runAction(cc.blink(2, cc.macro.REPEAT_FOREVER));
+                starNode.runAction(cc.sequence(
+                    cc.delayTime(CommonUtil.randomNumber(15, 30) / 10),
+                    cc.fadeOut(CommonUtil.randomNumber(1, 3) / 10),
+                    cc.delayTime(CommonUtil.randomNumber(3, 6) / 10),
+                    cc.fadeIn(CommonUtil.randomNumber(1, 3) / 10)
+                ).repeatForever());
+            }
+
         }
     }
 
