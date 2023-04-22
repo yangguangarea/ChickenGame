@@ -67,8 +67,6 @@ export default class PrizeDialog extends cc.Component {
             this.recordNode.getChildByName('prizeLabel').getComponent(cc.Label).string = `${param1}元红包`;
             this.recordNode.getChildByName('timeLabel').getComponent(cc.Label).string = `${param2}`;
         }
-
-
     }
 
     jumpBtnClick() {

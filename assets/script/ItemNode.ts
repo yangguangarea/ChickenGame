@@ -45,9 +45,11 @@ export default class ItemNode extends cc.Component {
         if(CommonUtil.randomNumber(1, 2) === 1) {
             this.itemType = ItemType.changlai;
             this.itemChangelai.active = true;
+            this.itemChangelai.getChildByName('aniNode').getComponent(cc.Animation).play();
         } else {
             this.itemType = ItemType.changwang;
             this.itemChangewang.active = true;
+            this.itemChangewang.getChildByName('aniNode').getComponent(cc.Animation).play();
         }
     }
 

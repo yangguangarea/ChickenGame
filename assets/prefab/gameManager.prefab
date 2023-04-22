@@ -910,7 +910,7 @@
     "_contentSize": {
       "__type__": "cc.Size",
       "width": 750,
-      "height": 934
+      "height": 834
     },
     "_anchorPoint": {
       "__type__": "cc.Vec2",
@@ -959,8 +959,8 @@
     "_alignFlags": 5,
     "_left": 0,
     "_right": 0,
-    "_top": 200,
-    "_bottom": 200,
+    "_top": 250,
+    "_bottom": 250,
     "_verticalCenter": 0,
     "_horizontalCenter": 0,
     "_isAbsLeft": true,

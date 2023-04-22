@@ -89,10 +89,6 @@ export default class MainScene extends cc.Component {
         
     }
 
-    loadingLayerAni() {
-        let btnBegin = this.node.getChildByName('loadLayer').getChildByName('btnBegin');
-        btnBegin.runAction(cc.sequence(cc.scaleTo(0.3, 1.1), cc.scaleTo(0.3, 1)).repeatForever());
-    }
 
     //游戏规则点击
     ruleBtnClick() {
@@ -148,9 +144,6 @@ export default class MainScene extends cc.Component {
         prizeDialog.getComponent(PrizeDialog).initDialog(type, param1, param2);
         prizeDialogContent.addChild(prizeDialog);
     }
-
-    
-
 
     closeDialog(dialogMap) {
         // let dialogMap = {
@@ -219,8 +212,6 @@ export default class MainScene extends cc.Component {
         }
     }
 
-
-
     //音乐开关点击
     musicBtnClick() {
         console.log("音乐开关点击");
@@ -234,6 +225,79 @@ export default class MainScene extends cc.Component {
     //播放点击item音效
     playItemClickAudio() {
         AudioManager.playEffectMusic(this.itemClickAudio);
+    }
+
+    loadingLayerAni() {
+        let loadLayer = this.node.getChildByName('loadLayer');
+        let btnBegin = loadLayer.getChildByName('btnBegin');
+        btnBegin.runAction(cc.sequence(cc.scaleTo(0.3, 1.1), cc.scaleTo(0.3, 1)).repeatForever());
+
+        let cloudNode = loadLayer.getChildByName('cloudNode');
+
+        let moveCloudArray = [{
+            isLeft: true,//是否初始是从左边开始移动
+            moveDis: 40,
+            moveTime: 4,
+        }, {
+            isLeft: false,
+            moveDis: 30,
+            moveTime: 6,
+        }, {
+            isLeft: true,
+            moveDis: 30,
+            moveTime: 3.5,
+        }, {
+            isLeft: true,
+            moveDis: 20,
+            moveTime: 4,
+        }, {
+            isLeft: false,
+            moveDis: 20,
+            moveTime: 5,
+        }];
+        for (let index = 0; index < 5; index++) {
+            const cloud = cloudNode.getChildByName(`sp_cloud_${index + 1}`);
+            let moveAni = moveCloudArray[index];
+            let leftPos = moveAni.isLeft ? - moveAni.moveDis : moveAni.moveDis;
+            let rightPos  = moveAni.isLeft ? moveAni.moveDis : -moveAni.moveDis;
+            cloud.runAction(cc.sequence(
+                cc.moveBy(moveAni.moveTime, cc.v2(leftPos, 0)),
+                cc.moveBy(moveAni.moveTime, cc.v2(rightPos, 0))
+            ).repeatForever());
+        }
+        
+        let sp_title = loadLayer.getChildByName('sp_title');
+        let sp_swallow = sp_title.getChildByName('sp_swallow');
+        sp_swallow.runAction(cc.sequence(
+            cc.moveBy(3, cc.v2(-30, 30)),
+            cc.moveBy(4, cc.v2(30, -30))
+        ).repeatForever());
+
+
+        let sp_wheat_1 = sp_title.getChildByName('sp_wheat_1');
+        sp_wheat_1.runAction(cc.sequence(
+            cc.rotateBy(3, 15),
+            cc.rotateBy(4, -15)
+        ).repeatForever());
+
+        let sp_wheat_2 = sp_title.getChildByName('sp_wheat_2');
+        sp_wheat_2.runAction(cc.sequence(
+            cc.rotateBy(4, -15),
+            cc.rotateBy(5, 15)
+        ).repeatForever());
+
+
+        let changlaiNode = loadLayer.getChildByName('changlaiNode');
+        let changlai_hand = changlaiNode.getChildByName('changlai_hand');
+        let changwang_hand = changlaiNode.getChildByName('changwang_hand');
+        changlai_hand.runAction(cc.sequence(
+            cc.rotateBy(1.5, 20),
+            cc.rotateBy(1, -20)
+        ).repeatForever());
+        changwang_hand.runAction(cc.sequence(
+            cc.rotateBy(1, 20),
+            cc.rotateBy(1.5, -20)
+        ).repeatForever());
     }
 
 }
