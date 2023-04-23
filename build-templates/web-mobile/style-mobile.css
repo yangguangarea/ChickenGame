@@ -146,18 +146,6 @@ p.footer {
 	text-shadow: 0px 1px 2px 0px rgba(151, 65, 0, 0.5);
 }
 
-.panda {
-	position: absolute;
-	left: 50%;
-	margin-left: -65px;
-	top: 190px;
-	background: url("./panda.png") no-repeat;
-	background-size: 130px 150px;
-	width: 130px;
-	height: 150px;
-}
-
-
 .splash-bottom .grasscontainer{
 	width: 100%;
 	position: absolute;
