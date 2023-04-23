@@ -1,6 +1,6 @@
 {
   "ver": "2.3.7",
-  "uuid": "41e535bb-136c-458e-8b09-cd2e00cee492",
+  "uuid": "14e04fb2-4bd0-407b-9ded-f9689cfff949",
   "importer": "texture",
   "type": "sprite",
   "wrapMode": "clamp",
@@ -14,9 +14,9 @@
   "subMetas": {
     "ruleDialog_bg": {
       "ver": "1.0.6",
-      "uuid": "a7abff65-c945-404c-932e-dc25887af101",
+      "uuid": "12a5f243-5519-4353-8094-914442e8ecbb",
       "importer": "sprite-frame",
-      "rawTextureUuid": "41e535bb-136c-458e-8b09-cd2e00cee492",
+      "rawTextureUuid": "14e04fb2-4bd0-407b-9ded-f9689cfff949",
       "trimType": "auto",
       "trimThreshold": 1,
       "rotated": false,
@@ -25,9 +25,9 @@
       "trimX": 0,
       "trimY": 0,
       "width": 626,
-      "height": 967,
+      "height": 906,
       "rawWidth": 626,
-      "rawHeight": 967,
+      "rawHeight": 906,
       "borderTop": 0,
       "borderBottom": 0,
       "borderLeft": 0,
