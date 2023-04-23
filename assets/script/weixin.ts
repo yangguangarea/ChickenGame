@@ -21,7 +21,7 @@ export function getCurrentPages() {
 
 // class weixinXX {
 // 	//微信H5网页授权登录流程(公众号登录流程)
-// 	async weixinOALoginFlow() {
+	// async weixinOALoginFlow() {
 // 		//首选判断当前的浏览器是不是微信浏览器
 // 		let isWechat = checkIsWechatBrowser();
 // 		if (isWechat) {
