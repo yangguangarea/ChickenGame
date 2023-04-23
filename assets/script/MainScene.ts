@@ -8,6 +8,7 @@ import PrizeDialog from "./PrizeDialog";
 import ResultDialog from "./ResultDialog";
 import RuleDialog from "./RuleDialog";
 import TableDialog from "./TableDialog";
+import { checkIsWechatBrowser, getCurrentPages } from "./weixin";
 
 const {ccclass, property} = cc._decorator;
 
@@ -80,8 +81,7 @@ export default class MainScene extends cc.Component {
         // this.showResultDialog(8, 1, GameOverType.longTimeNoClick);
         // EventManager.dispatchEvent(NOTI_NAME.SHOW_PRIZE_DIALOG, 'succNode', '2.44');
         console.log("----idowiahiwoadj点击按钮111");
-        // getCurrentPages();
-        
+        getCurrentPages();
     }
 
     testBtnClick2() {
@@ -98,8 +98,8 @@ export default class MainScene extends cc.Component {
         // EventManager.dispatchEvent(NOTI_NAME.SHOW_PRIZE_DIALOG, 'succNode', '2.44');
         // EventManager.dispatchEvent(NOTI_NAME.SHOW_PRIZE_DIALOG, 'recordNode', '2.44', '2024/4/3 11:55');
         console.log("----jdiwojdiwojoi222");
-        console.log('---window.location.href', window.location.href);
-        // checkIsWechatBrowser();
+        // console.log('---window.location.href', window.location.href);
+        checkIsWechatBrowser();
     }
 
 

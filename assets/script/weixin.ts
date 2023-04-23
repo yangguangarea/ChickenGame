@@ -3,21 +3,21 @@
 // appid=wx520c15f417810387
 // &redirect_uri=https://chong.qq.com/php/index.php?d=&c=wxAdapter&m=mobileDeal&showwxpaytitle=1&vb2ctag=4_2030_5_1194_60&response_type=code&scope=snsapi_base&state=123#wechat_redirect
 
-// export function checkIsWechatBrowser() {
-// 	let ua = navigator.userAgent.toLowerCase();
-// 	if (ua.match(/MicroMessenger/i) == "micromessenger"){
-// 		console.log("-----是微信浏览器");
-// 		return true; // 微信浏览器
-// 	}else{
-// 		console.log("-----非微信浏览器");
-// 		return false; // 非微信浏览器
-// 	}
-// }
+export function checkIsWechatBrowser() {
+	let ua = navigator.userAgent.toLowerCase();
+	if (ua.match(/MicroMessenger/i) == "micromessenger"){
+		console.log("-----是微信浏览器");
+		return true; // 微信浏览器
+	}else{
+		console.log("-----非微信浏览器");
+		return false; // 非微信浏览器
+	}
+}
 
-// export function getCurrentPages() {
-// 	console.log('---window.location.href', window.location.href);
-// 	return window.location.href;
-// }
+export function getCurrentPages() {
+	console.log('---window.location.href', window.location.href);
+	return window.location.href;
+}
 
 // class weixinXX {
 // 	//微信H5网页授权登录流程(公众号登录流程)

@@ -8,9 +8,15 @@
     ]
   ],
   "excluded-modules": [
+    "Collider",
     "DragonBones",
+    "EditBox",
     "MotionStreak",
+    "Physics",
     "ParticleSystem",
+    "Slider",
+    "ScrollBar",
+    "ScrollView",
     "Spine Skeleton",
     "TiledMap",
     "VideoPlayer",
