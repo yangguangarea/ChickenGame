@@ -9,7 +9,8 @@ window.boot = function () {
     function setLoadingDisplay () {
         // Loading splash scene
         var splash = document.getElementById('splash');
-        var progressBar = splash.querySelector('.progress-bar span');
+        var progressBar = splash.querySelector('.bar');
+
         onProgress = function (finish, total) {
             var percent = 100 * finish / total;
             if (progressBar) {
