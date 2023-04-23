@@ -38,7 +38,10 @@ export default class MainScene extends cc.Component {
     bgmAudio: cc.AudioClip = null;
 
     @property(cc.AudioClip)
-    itemClickAudio: cc.AudioClip = null;
+    itemChanglaiClickAudio: cc.AudioClip = null;
+
+    @property(cc.AudioClip)
+    itemChangwangClickAudio: cc.AudioClip = null;
 
     gameManagerNode:cc.Node = null;
 
@@ -50,6 +53,8 @@ export default class MainScene extends cc.Component {
         EventManager.addListener(NOTI_NAME.SHOW_ADS_DIALOG,this.showAdsDialog,this);
         EventManager.addListener(NOTI_NAME.SHOW_PRIZE_DIALOG,this.showPrizeDialog,this);
         EventManager.addListener(NOTI_NAME.CLOSE_DIALOG,this.closeDialog,this);
+        EventManager.addListener(NOTI_NAME.PLAY_ITEM_CLICK_AUDIO,this.playItemClickAudio,this);
+        
     }
     onDestroy() {
         EventManager.removeListener(NOTI_NAME.SHOW_GAME_LAYER,this.showGameLayer,this);
@@ -58,6 +63,7 @@ export default class MainScene extends cc.Component {
         EventManager.removeListener(NOTI_NAME.SHOW_ADS_DIALOG,this.showAdsDialog,this);
         EventManager.removeListener(NOTI_NAME.SHOW_PRIZE_DIALOG,this.showPrizeDialog,this);
         EventManager.removeListener(NOTI_NAME.CLOSE_DIALOG,this.closeDialog,this);
+        EventManager.removeListener(NOTI_NAME.PLAY_ITEM_CLICK_AUDIO,this.playItemClickAudio,this);
     }
 
     start () {
@@ -65,6 +71,8 @@ export default class MainScene extends cc.Component {
         // setTimeout(() => {
         //     this.musicBtnClick();
         // }, 1000);
+
+        this.musicBtnClick();
 
         let menuLayer = this.node.getChildByName('menuLayer');
         menuLayer.getChildByName('btnRule1').active = true;
@@ -97,12 +105,12 @@ export default class MainScene extends cc.Component {
         //     console.log('----请求失败', code, reason);
         // });
 
-        // EventManager.dispatchEvent(NOTI_NAME.SHOW_TABLE_DIALOG);
+        EventManager.dispatchEvent(NOTI_NAME.SHOW_TABLE_DIALOG);
         // EventManager.dispatchEvent(NOTI_NAME.SHOW_PRIZE_DIALOG, 'failNode');
         // EventManager.dispatchEvent(NOTI_NAME.SHOW_PRIZE_DIALOG, 'succNode', '2.44');
         // EventManager.dispatchEvent(NOTI_NAME.SHOW_PRIZE_DIALOG, 'recordNode', '2.44', '2024/4/3 11:55');
         console.log("----jdiwojdiwojoi222");
-        getCurrentPages();
+        // getCurrentPages();
         // console.log('---window.location.href', window.location.href);
         // checkIsWechatBrowser();
     }
@@ -257,8 +265,12 @@ export default class MainScene extends cc.Component {
     }
 
     //播放点击item音效
-    playItemClickAudio() {
-        AudioManager.playEffectMusic(this.itemClickAudio);
+    playItemClickAudio(isChanglai:boolean) {
+        if(isChanglai) {
+            AudioManager.playEffectMusic(this.itemChanglaiClickAudio); 
+        } else {
+            AudioManager.playEffectMusic(this.itemChangwangClickAudio);
+        }
     }
 
     loadingLayerAni() {
@@ -289,7 +301,7 @@ export default class MainScene extends cc.Component {
             moveDis: 20,
             moveTime: 5,
         }];
-        for (let index = 0; index < 5; index++) {
+        for (let index = 0; index < 4; index++) {
             const cloud = cloudNode.getChildByName(`sp_cloud_${index + 1}`);
             let moveAni = moveCloudArray[index];
             let leftPos = moveAni.isLeft ? - moveAni.moveDis : moveAni.moveDis;

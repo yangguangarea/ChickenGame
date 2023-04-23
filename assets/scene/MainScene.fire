@@ -517,7 +517,7 @@
     "_srcBlendFactor": 770,
     "_dstBlendFactor": 771,
     "_spriteFrame": {
-      "__uuid__": "19c4072e-b0ea-4be9-bffe-6f711a811b28"
+      "__uuid__": "31b26f1a-00b7-4b07-bee3-a69244bccdc5"
     },
     "_type": 0,
     "_sizeMode": 1,
@@ -991,7 +991,7 @@
       "__id__": 10
     },
     "_children": [],
-    "_active": true,
+    "_active": false,
     "_components": [
       {
         "__id__": 20
@@ -1186,7 +1186,7 @@
       "ctor": "Float64Array",
       "array": [
         -160.495,
-        -435.031,
+        -345.678,
         0,
         0,
         0,
@@ -1280,7 +1280,7 @@
       "ctor": "Float64Array",
       "array": [
         172.404,
-        -408.292,
+        -318.939,
         0,
         0,
         0,
@@ -1374,7 +1374,7 @@
       "ctor": "Float64Array",
       "array": [
         98.841,
-        -393.537,
+        -304.184,
         0,
         0,
         0,
@@ -1468,7 +1468,7 @@
       "ctor": "Float64Array",
       "array": [
         -95.181,
-        -393.537,
+        -304.184,
         0,
         0,
         0,
@@ -4165,7 +4165,7 @@
         "__id__": 91
       }
     ],
-    "_active": true,
+    "_active": false,
     "_components": [
       {
         "__id__": 96
@@ -4550,7 +4550,7 @@
         "__id__": 99
       }
     ],
-    "_active": true,
+    "_active": false,
     "_components": [
       {
         "__id__": 104
@@ -4935,7 +4935,7 @@
         "__id__": 107
       }
     ],
-    "_active": true,
+    "_active": false,
     "_components": [
       {
         "__id__": 112
@@ -5379,10 +5379,13 @@
       "__uuid__": "8f609092-b681-41fe-a191-ae87ba6eb5c3"
     },
     "bgmAudio": {
-      "__uuid__": "b5263c92-06ea-49b8-901e-3233ed23edc8"
+      "__uuid__": "863252cf-9052-4c28-9a8e-c9f7de514c20"
     },
-    "itemClickAudio": {
-      "__uuid__": "ec8fc72b-6fe1-4d2d-884c-c7d672a2df31"
+    "itemChanglaiClickAudio": {
+      "__uuid__": "087fe1f2-2243-48a7-898c-a89eb297b81f"
+    },
+    "itemChangwangClickAudio": {
+      "__uuid__": "4299083e-0edf-425e-a3b5-20bd295722c2"
     },
     "_id": "9dVjHgYfZD5rGsmeCk4DGS"
   }

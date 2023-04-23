@@ -1,4 +1,5 @@
-import CommonUtil, { ItemType } from "./CommonUtil";
+import CommonUtil, { ItemType, NOTI_NAME } from "./CommonUtil";
+import EventManager from "./EventManager";
 import GameManager from "./GameManager";
 
 const {ccclass, property} = cc._decorator;
@@ -55,6 +56,12 @@ export default class ItemNode extends cc.Component {
 
     click() {
         console.log("-----点中了", this.itemType);
+        if(this.itemType === ItemType.changlai) {
+            EventManager.dispatchEvent(NOTI_NAME.PLAY_ITEM_CLICK_AUDIO, true);
+        } else {
+            EventManager.dispatchEvent(NOTI_NAME.PLAY_ITEM_CLICK_AUDIO);
+        }
+        
         this.clickCallBack && this.clickCallBack(this.id);
     }
 
