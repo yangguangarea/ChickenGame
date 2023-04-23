@@ -3,6 +3,8 @@
 // appid=wx520c15f417810387
 // &redirect_uri=https://chong.qq.com/php/index.php?d=&c=wxAdapter&m=mobileDeal&showwxpaytitle=1&vb2ctag=4_2030_5_1194_60&response_type=code&scope=snsapi_base&state=123#wechat_redirect
 
+import CommonUtil from "./CommonUtil";
+
 export function checkIsWechatBrowser() {
 	let ua = navigator.userAgent.toLowerCase();
 	if (ua.match(/MicroMessenger/i) == "micromessenger"){
@@ -19,53 +21,87 @@ export function getCurrentPages() {
 	return window.location.href;
 }
 
-// class weixinXX {
-// 	//微信H5网页授权登录流程(公众号登录流程)
-	// async weixinOALoginFlow() {
-// 		//首选判断当前的浏览器是不是微信浏览器
-// 		let isWechat = checkIsWechatBrowser();
-// 		if (isWechat) {
-// 		//获取微信code
-// 		let pages = getCurrentPages();
-// 		//获取当前的页面对象
-// 		let curPage = pages[pages.length - 1];
-// 		//获取code
-// 		let code = curPage.options.code || "";
-// 		//如果code存在,请求服务端获取用户信息
-// 		if (code) {
-// 			//公众号登录
-// 			let isLogin = await this.weixinOALogin(code);
-// 			//如果登录成功,就再请求服务端接口获取一下用户信息
-// 			if (isLogin) {
-// 			// //获取用户信息
-// 			const userinfo = await this.getUserInfo();
-// 			return userinfo;
-// 			} else {
-// 			uni.showToast({
-// 				title: "登录失败",
-// 				icon: "error",
-// 				duration: 2000,
-// 			});
-// 			return false;
-// 			}
-// 		} else {
-// 			//当前的页面全路径
-// 			let fullPath = curPage.__page__.fullPath;
-// 			//当前的页面URL
-// 			let currentPageUrl = "";
-// 			if (fullPath && fullPath[0] == "/") {
-// 			currentPageUrl = "http://" + document.domain + fullPath;
-// 			} else {
-// 			currentPageUrl = "http://" + document.domain + "/" + fullPath;
-// 			}
-// 			//跳转到微信授权页面授权
-// 			this.jumpToWechatAuthorizePage(currentPageUrl);
-// 		}
-// 		} else {
-// 		//表明非微信浏览器环境下(可以引导使用扫码登录等)
-// 		return 0;
-// 		}
-// 	},
+class weixinXX {
+	//微信H5网页授权登录流程(公众号登录流程)
+	async weixinOALoginFlow() {
+		//首选判断当前的浏览器是不是微信浏览器
+		let isWechat = checkIsWechatBrowser();
+		if (isWechat) {
+			//获取微信code
+			let pages = getCurrentPages();
+			let code = CommonUtil.getParam(pages, 'code');
+			// //获取当前的页面对象
+			// let curPage = pages[pages.length - 1];
+			// //获取code
+			// let code = curPage.options.code || "";
+			//如果code存在,请求服务端获取用户信息
+			if (code) {
+				// //公众号登录
+				// let isLogin = await this.weixinOALogin(code);
+				// //如果登录成功,就再请求服务端接口获取一下用户信息
+				// if (isLogin) {
+				// 	// //获取用户信息
+				// 	const userinfo = await this.getUserInfo();
+				// 	return userinfo;
+				// } else {
+				// 	uni.showToast({
+				// 		title: "登录失败",
+				// 		icon: "error",
+				// 		duration: 2000,
+				// 	});
+				// 	return false;
+				// }
+			} else {
+				//当前的页面全路径
+				let fullPath = curPage.__page__.fullPath;
+				//当前的页面URL
+				let currentPageUrl = "";
+				if (fullPath && fullPath[0] == "/") {
+					currentPageUrl = "http://" + document.domain + fullPath;
+				} else {
+					currentPageUrl = "http://" + document.domain + "/" + fullPath;
+				}
+				//跳转到微信授权页面授权
+				this.jumpToWechatAuthorizePage(currentPageUrl);
+			}
+			} else {
+			//表明非微信浏览器环境下(可以引导使用扫码登录等)
+			return 0;
+		}
+	}
+
+	//跳转到微信授权页面
+	jumpToWechatAuthorizePage(currentPageUrl) {
+		currentPageUrl = 'https://changshubank.sumaokeji.com/index.html';
+		let appid = 'wxff3693cf40c5f63f';
+		// 'https://open.weixin.qq.com/connect/oauth2/authorize?appid=APPID&redirect_uri=REDIRECT_URI&response_type=code&scope=SCOPE&state=STATE#wechat_redirect';
+
+		// 'https://open.weixin.qq.com/connect/oauth2/authorize?appid=wx520c15f417810387&redirect_uri=https%3A%2F%2Fchong.qq.com%2Fphp%2Findex.php%3Fd%3D%26c%3DwxAdapter%26m%3DmobileDeal%26showwxpaytitle%3D1%26vb2ctag%3D4_2030_5_1194_60&response_type=code&scope=snsapi_base&state=123#wechat_redirect';
+
+		// let redirectUrl = config.wechatCallbackUrl + "?frompage=" + encodeURIComponent(currentPageUrl)
+		// let linkUrl = config.wechatAuthorizeLink
+		// .replace("{APPID}", config.wechatAppId)
+		// .replace("{REDIRECT_URI}", encodeURIComponent(redirectUrl));
+
+
+		let linkUrl = 'https://open.weixin.qq.com/connect/oauth2/authorize?appid=' + appid 
+		+ '&redirect_uri=' + encodeURIComponent(currentPageUrl)
+		+ '&response_type=code&scope=snsapi_base' + `&state=${123}` + '#wechat_redirect';
+		window.location.href = linkUrl;
+	}
+	
+	// https://open.weixin.qq.com/connect/oauth2/authorize?
+	// appid=wx520c15f417810387
+	// &redirect_uri=https%3A%2F%2Fchong.qq.com%2Fphp%2Findex.php%3Fd%3D%26c%3DwxAdapter%26m%3DmobileDeal%26showwxpaytitle%3D1%26vb2ctag%3D4_2030_5_1194_60
+	// &response_type=code
+	// &scope=snsapi_base
+	// &state=123#wechat_redirect
+	
+
+// AppID与AppSecret账号：
+// AppID：
+// AppSecret：b811ca802a947e1f279279532bc4c9bb
+
 // 	//微信公众号登录
 // 	async weixinOALogin(code) {
 // 		const res = await APP.$api.wxoaLogin({
@@ -79,22 +115,7 @@ export function getCurrentPages() {
 // 		return false;
 // 		}
 // 	},
-// 	//跳转到微信授权页面
-// 	jumpToWechatAuthorizePage(currentPageUrl) {
-// 		let redirectUrl = config.wechatCallbackUrl + "?frompage=" + encodeURIComponent(currentPageUrl)
-// 		let linkUrl = config.wechatAuthorizeLink
-// 		.replace("{APPID}", config.wechatAppId)
-// 		.replace("{REDIRECT_URI}", encodeURIComponent(redirectUrl));
-// 		window.location.href = linkUrl;
-// 	},
-// 	/*
-// 	https://open.weixin.qq.com/connect/oauth2/authorize?
-// 	appid=wx520c15f417810387
-// 	&redirect_uri=https%3A%2F%2Fchong.qq.com%2Fphp%2Findex.php%3Fd%3D%26c%3DwxAdapter%26m%3DmobileDeal%26showwxpaytitle%3D1%26vb2ctag%3D4_2030_5_1194_60
-// 	&response_type=code
-// 	&scope=snsapi_base
-// 	&state=123#wechat_redirect
-// 	*/
+
 // 	//获取用户信息
 // 	async getUserInfo(refresh = true) {
 // 		//如果不用刷新直接从缓存取数据
@@ -143,6 +164,6 @@ export function getCurrentPages() {
 // 		window.location.href = sourceUrl;
 // 		}
 // 	},
-// }
+}
 
-// export default new weixinXX();
+export default new weixinXX();

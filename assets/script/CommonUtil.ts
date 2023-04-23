@@ -57,11 +57,11 @@ export default class CommonUtil {
 		// window.open(url);
 	}
 
-	//提取参数中的指定内容
-	// public static getParam = (url, name) => {
-	// 	var reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)");
-	// 	var r = url.split("?")[1].match(reg);
-	// 	if (r != null) return decodeURI(r[2]);
-	// 	return null;
-	// };
+	提取参数中的指定内容
+	public static getParam = (url, name) => {
+		var reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)");
+		var r = url.split("?")[1].match(reg);
+		if (r != null) return decodeURI(r[2]);
+		return null;
+	};
 }

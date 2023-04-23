@@ -1,6 +1,6 @@
 import AdsDialog from "./AdsDialog";
 import AudioManager from "./AudioManager";
-import { GameOverType, NOTI_NAME } from "./CommonUtil";
+import CommonUtil, { GameOverType, NOTI_NAME } from "./CommonUtil";
 import EventManager from "./EventManager";
 import GameManager from "./GameManager";
 import NetWork from "./NetWork";
@@ -8,7 +8,7 @@ import PrizeDialog from "./PrizeDialog";
 import ResultDialog from "./ResultDialog";
 import RuleDialog from "./RuleDialog";
 import TableDialog from "./TableDialog";
-import { checkIsWechatBrowser, getCurrentPages } from "./weixin";
+import weixinXX, { getCurrentPages } from "./weixin";
 
 const {ccclass, property} = cc._decorator;
 
@@ -42,6 +42,7 @@ export default class MainScene extends cc.Component {
 
     gameManagerNode:cc.Node = null;
 
+    
     onLoad () {
         EventManager.addListener(NOTI_NAME.SHOW_GAME_LAYER,this.showGameLayer,this);
         EventManager.addListener(NOTI_NAME.SHOW_RESULT_DIALOG,this.showResultDialog,this);
@@ -81,7 +82,9 @@ export default class MainScene extends cc.Component {
         // this.showResultDialog(8, 1, GameOverType.longTimeNoClick);
         // EventManager.dispatchEvent(NOTI_NAME.SHOW_PRIZE_DIALOG, 'succNode', '2.44');
         console.log("----idowiahiwoadj点击按钮111");
-        getCurrentPages();
+        // getCurrentPages();
+
+        weixinXX.jumpToWechatAuthorizePage('aaa');
     }
 
     testBtnClick2() {
@@ -98,10 +101,25 @@ export default class MainScene extends cc.Component {
         // EventManager.dispatchEvent(NOTI_NAME.SHOW_PRIZE_DIALOG, 'succNode', '2.44');
         // EventManager.dispatchEvent(NOTI_NAME.SHOW_PRIZE_DIALOG, 'recordNode', '2.44', '2024/4/3 11:55');
         console.log("----jdiwojdiwojoi222");
+        getCurrentPages();
         // console.log('---window.location.href', window.location.href);
-        checkIsWechatBrowser();
+        // checkIsWechatBrowser();
     }
 
+    testBtnClick3() {
+        let pages = getCurrentPages();
+        let code = CommonUtil.getParam(pages, 'code');
+        NetWork.httpGet('getOpenIdByCode?', {
+            code : code
+        }, (json) => {
+            if(json.status === 1000) {
+                console.log('请求成功', json);
+                NetWork.openId = json.data;
+            }
+        }, () => {
+            console.log('请求失败');
+        });
+    }
 
     //游戏规则点击
     ruleBtnClick(isCloseStartGame = false) {
@@ -197,6 +215,7 @@ export default class MainScene extends cc.Component {
     gameBeginClick() {
         console.log("游戏开始点击");
         // this.showGameLayer();
+        this.testBtnClick3();
         this.ruleBtnClick(true);
     }
 

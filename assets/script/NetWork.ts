@@ -50,6 +50,9 @@
 // }
 
 class NetWork {
+
+	openId:string = '';
+
 	sendXHR (requestName:string, param?, succCallback?, failCallback?) {
 		var xhr = new XMLHttpRequest();
 
@@ -90,8 +93,9 @@ class NetWork {
 	// }
 
 
-	httpGet(param, succ, fail, method?) {
-		let url = "https://api.sumaokeji.com/sumao/api/bank/getOpenIdByCode?";
+	httpGet(url, param, succ, fail, method?) {
+		let source = 'https://api.sumaokeji.com/sumao/api/bank/';
+		url = source + url;
 		for (let key in param) {
 			url += key + '=' + param[key];
 			url += '&'; 
