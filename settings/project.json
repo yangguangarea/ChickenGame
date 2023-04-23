@@ -8,10 +8,17 @@
     ]
   ],
   "excluded-modules": [
+    "DragonBones",
+    "EditBox",
+    "Graphics",
+    "Mask",
     "MotionStreak",
     "Physics",
+    "ProgressBar",
     "ParticleSystem",
     "ScrollView",
+    "Spine Skeleton",
+    "StudioComponent",
     "Toggle",
     "TiledMap",
     "VideoPlayer",
@@ -45,5 +52,5 @@
       "enable": false
     }
   },
-  "last-module-event-record-time": 1681469539986
+  "last-module-event-record-time": 1682170542702
 }

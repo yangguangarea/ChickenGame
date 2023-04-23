@@ -233,6 +233,7 @@ p.footer {
 }
 
 .bgbottombracket {
+	/* 150%小屏幕更合适 */
 	margin-top: 160%;
 }
 .bgbottom {
@@ -249,30 +250,108 @@ p.footer {
 .progress-container {
 	position: absolute;
 	left: 50%;
-	margin-left: -100px;
-	top: 370px;
-	width: 200px;
-	height: 15px;
-	background-color: rgba(99, 28, 0, 0.2);
-	border-radius: 7.5px;
+	/* margin-left: -100px; */
+	transform: translateX(-50%);
+	top: 30%;
+	height: 1.54rem;
+	width: 4.96rem;
+	display: block;
+}
+
+.changlai-container {
+	position: absolute;
+	left: 0;
+	
+	top: -.15rem;
+	height: .85rem;
+	width: 100%;
+	display: flex;
+	flex-wrap:nowrap;
+	justify-content: space-between;
+	/* display: block; */
+}
+
+.changlai {
+	display: block;
+	/* position: absolute; */
+	background: url("./sp_changlai.png") no-repeat;
+	height: .85rem;
+	width: .81rem;
+	background-size: 100%;
+	background-repeat: no-repeat;
+	animation: animate-changlai 1s linear infinite;
+}
+.changwang {
+	display: block;
+	/* position: absolute; */
+	background: url("./sp_changwang.png") no-repeat;
+	height: .85rem;
+	width: .75rem;
+	background-size: 100%;
+	background-repeat: no-repeat;
+	animation: animate-changwang 1s linear infinite;
+}
+
+@keyframes animate-changlai {
+	0% {
+		transform: rotate(0deg);
+	}
+	50% {
+		transform: rotate(30deg);
+	}
+	100% {
+		transform: rotate(0deg);
+	}
+}
+@keyframes animate-changwang {
+	0% {
+		transform: rotate(0deg);
+	}
+	50% {
+		transform: rotate(-30deg);
+	}
+	100% {
+		transform: rotate(0deg);
+	}
+}
+
+/* #changlai1 {
+	left
+} */
+
+.bar-bg {
+	display: block;
+	position: absolute;
+	left: 0;
+	bottom: 0;
+	background: url("./progress_bg_true.png") no-repeat;
+	height: .69rem;
+	width: 4.96rem;
+	background-size: 100%;
 }
 
 .bar {
-	width: 100%;
-	background: url("./process-bar.png") no-repeat;
-	height: 15px;
-	background-size: cover;
+	display: block;
+	position: absolute;
+	bottom: 0;
+	left: 0;
+	background: url("./progress_bg.png") no-repeat;
+	height: .69rem;
+	width: 4.96rem;
+	background-size: 100%;
 }
+
 
 .tips {
 	position: absolute;
-	left: 0;
-	top: 400px;
+	left: 31%;
+	bottom: 0;
+	/* top: 400px; */
 	text-align: center;
-	font-size: 14px;
-	font-weight: 400;
-	width: 100%;
-	line-height: 17px;
-	color: rgba(146, 70, 20, 1);
+	font-size: .4rem;
+	font-weight: bold;
+	/* width: 100%; */
+	line-height: .69rem;
+	color: rgba(144, 81, 37, 1);
 	text-align: center;
 }

@@ -42,11 +42,28 @@
 </head>
 <body>
 	<canvas id="GameCanvas" oncontextmenu="event.preventDefault()" tabindex="0"></canvas>
-	<!-- <div id="splash">
-		<div class="progress-bar stripes">
-			<span style="width: 0%"></span>
-		</div>
-	</div> -->
+
+	<script type="text/javascript">
+		console.log('------测试测试111');
+		// 封装一个根据屏幕尺寸自动改变html的font-size大小的函数
+		function rem() {
+			//获取html的宽度
+			console.log('------测试测试222');
+			let htmlW = document.documentElement.clientWidth;
+			// 获取body的宽度
+			let bodyW = document.body.clientWidth;
+			// 兼容处理
+			let W = htmlW||bodyW;
+			// 设置html的font-size大小
+			// 因为设计图尺寸是750，所以平分，这样*100之后，1rem就等于100px;
+			document.documentElement.style.fontSize = (W / 750 * 100) + 'px';
+			// 定义屏幕宽度改变时触发
+			window.onresize = function () {rem()}
+			// 设置初始触发一次rem()
+		}
+		rem();
+	</script>
+
 
 	<div id="splash">
 		<div class="sp-bg"></div>
@@ -78,25 +95,40 @@
 			</div>
 		</div>
 
-
-
-
-		<!-- <div class="sp-cloud"></div>
-		<div class="sp-grass"></div> -->
 		<div class="progress-container">
-			<div class="bar" style="width: 0%"></div>
+			<div class="changlai-container">
+				<div class="changlai"></div>
+				<div class="changwang"></div>
+				<div class="changlai"></div>
+				<div class="changwang"></div>
+			</div>
+			<div class="bar-bg"></div>
+			<!-- <div class="bar" style="width: 80%"></div> -->
+			<div class="bar"></div>
+			<div id="tips" class="tips">稍等一下...</div>
 		</div>
-		<div id="tips" class="tips">每⽇登陆清扫装扮赚⾦币</div>
 	</div>
-
 <script src="src/settings.js" charset="utf-8"></script>
 <script src="vconsole.min.js"></script>
 <script src="main.js" charset="utf-8"></script>
-
 <script type="text/javascript">
-	console.log('------测试测试');
+	let tips = document.getElementById('tips');
+	let count = 1;
+	setInterval(()=> {
+		if(count === 1) {
+			tips.innerText = '稍等一下.';
+		} else if(count === 2) {
+			tips.innerText = '稍等一下..';
+		} else if(count === 3) {
+			tips.innerText = '稍等一下...';
+		}
+		count++;
+		if(count >= 4) {
+			count = 1;
+		}
+	}, 300);
+	
 </script>
-
 <script type="text/javascript">
 (function () {
 	// open web debugger console
@@ -107,9 +139,6 @@
 	var debug = window._CCSettings.debug;
 	// var splash = document.getElementById('splash');
 	// splash.style.display = 'block';
-
-
-
 
 	function loadScript (moduleName, cb) {
 		function scriptLoaded () {
