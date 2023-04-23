@@ -84,7 +84,8 @@ export default class MainScene extends cc.Component {
         console.log("----idowiahiwoadj点击按钮111");
         // getCurrentPages();
 
-        weixinXX.jumpToWechatAuthorizePage('aaa');
+        // weixinXX.jumpToWechatAuthorizePage('aaa');
+        EventManager.dispatchEvent(NOTI_NAME.SHOW_TOAST, '您没有抽中奖品', 1500);
     }
 
     testBtnClick2() {

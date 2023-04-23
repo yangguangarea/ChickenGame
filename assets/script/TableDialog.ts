@@ -107,7 +107,7 @@ export default class TableDialog extends cc.Component {
         NetWork.httpGet('prize?', {
             openId : NetWork.openId
         }, (json) => {
-            if(json.status === 1000) {
+            if(json && json.status === 1000) {
                 console.log('请求成功', json);
                 //默认逆时针旋转
                 let reward = '谢谢参与';
@@ -140,7 +140,10 @@ export default class TableDialog extends cc.Component {
                         }
                     }
                 })));
-
+            } else {
+                if(json && json.message) {
+                    EventManager.dispatchEvent(NOTI_NAME.SHOW_TOAST, json.message, 1500);
+                }
             }
         }, () => {
             console.log('请求失败');
@@ -163,7 +166,7 @@ export default class TableDialog extends cc.Component {
         NetWork.httpGet('getRecord?', {
             openId : NetWork.openId
         }, (json) => {
-            if(json.status === 1000) {
+            if(json && json.status === 1000) {
                 console.log('请求成功', json);
                 if(json.data) {
                     // 	"data":{
@@ -176,6 +179,10 @@ export default class TableDialog extends cc.Component {
                 } else {
                     //没有获奖记录
                     EventManager.dispatchEvent(NOTI_NAME.SHOW_PRIZE_DIALOG, 'recordNode', `0`, '0');
+                }
+            } else {
+                if(json && json.message) {
+                    EventManager.dispatchEvent(NOTI_NAME.SHOW_TOAST, json.message, 1500);
                 }
             }
         }, () => {
