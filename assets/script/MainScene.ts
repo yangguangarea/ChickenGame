@@ -3,6 +3,7 @@ import AudioManager from "./AudioManager";
 import { GameOverType, NOTI_NAME } from "./CommonUtil";
 import EventManager from "./EventManager";
 import GameManager from "./GameManager";
+import NetWork from "./NetWork";
 import PrizeDialog from "./PrizeDialog";
 import ResultDialog from "./ResultDialog";
 import RuleDialog from "./RuleDialog";
@@ -75,21 +76,30 @@ export default class MainScene extends cc.Component {
 
     testBtnClick1() {
         // this.showResultDialog(10, 1, GameOverType.success);
-        this.showResultDialog(9, 1, GameOverType.timeOver);
+        // this.showResultDialog(9, 1, GameOverType.timeOver);
         // this.showResultDialog(8, 1, GameOverType.longTimeNoClick);
         // EventManager.dispatchEvent(NOTI_NAME.SHOW_PRIZE_DIALOG, 'succNode', '2.44');
-        
+        console.log("----idowiahiwoadj点击按钮111");
+        // getCurrentPages();
         
     }
 
     testBtnClick2() {
-        
+        // NetWork.sendXHR();
+        // NetWork.getOpenidByCode();
+        // NetWork.httpGet({'code': 3218789}, (data)=> {
+        //     console.log('----请求成功', data);
+        // }, (code, reason) => {
+        //     console.log('----请求失败', code, reason);
+        // });
+
         // EventManager.dispatchEvent(NOTI_NAME.SHOW_TABLE_DIALOG);
         // EventManager.dispatchEvent(NOTI_NAME.SHOW_PRIZE_DIALOG, 'failNode');
         // EventManager.dispatchEvent(NOTI_NAME.SHOW_PRIZE_DIALOG, 'succNode', '2.44');
         // EventManager.dispatchEvent(NOTI_NAME.SHOW_PRIZE_DIALOG, 'recordNode', '2.44', '2024/4/3 11:55');
-
-        
+        console.log("----jdiwojdiwojoi222");
+        console.log('---window.location.href', window.location.href);
+        // checkIsWechatBrowser();
     }
 
 

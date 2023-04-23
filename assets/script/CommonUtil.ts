@@ -32,4 +32,36 @@ export default class CommonUtil {
 	public static randomNumber(min: number, max: number): number {
 		return Math.floor(Math.random() * (max - min + 1) + min);
 	}
+
+	
+	public static  getparam1(params){
+		let queryString = Object.keys(params).map(key => key + '=' + params[key]).join('&');
+		return queryString;
+	}
+
+	public static  getparam2(obj){
+		var arr = Object.keys(obj);
+		var str = "?";
+		for(var i in obj){
+			str += i;
+			str += "=";
+			str += obj[i];
+			str += "&";
+		}
+		// str = str.substr(0,str.length-1);
+		return str;
+	}
+
+	public static jumpOtherWebview(url) {
+		// window.location.href = url;
+		// window.open(url);
+	}
+
+	//提取参数中的指定内容
+	// public static getParam = (url, name) => {
+	// 	var reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)");
+	// 	var r = url.split("?")[1].match(reg);
+	// 	if (r != null) return decodeURI(r[2]);
+	// 	return null;
+	// };
 }
