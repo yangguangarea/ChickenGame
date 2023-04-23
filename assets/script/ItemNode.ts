@@ -43,7 +43,7 @@ export default class ItemNode extends cc.Component {
         // 2-6秒移动至屏幕右侧  750/6----750/2
         this.moveSpeed = CommonUtil.randomNumber(Math.floor(750/6), Math.floor(750/2));
 
-        if(CommonUtil.randomNumber(1, 2) === 1) {
+        if(CommonUtil.randomNumber(1, 5) >= 3) {
             this.itemType = ItemType.changlai;
             this.itemChangelai.active = true;
             this.itemChangelai.getChildByName('aniNode').getComponent(cc.Animation).play();

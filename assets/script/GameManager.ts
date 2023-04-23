@@ -34,8 +34,8 @@ export default class GameManager extends cc.Component {
 
     chooseItemType:ItemType = ItemType.changlai;//选择点击的常来常往类型
 
-    maxTime = 60;
-    gameTime = 60;//游戏剩余时间
+    maxTime = 20;
+    gameTime = 20;//游戏剩余时间
 
     clickTime = 0;//游戏累计无操作时间
     score = 0;
@@ -49,7 +49,10 @@ export default class GameManager extends cc.Component {
     maxItemCount = 8;//最大的item存在数量
 
     checkTickTime = 0;
-    checkTickTimeMax = 0.3;//检测生成item的时间间隔
+    checkTickTimeMax = 0.66;//检测生成item的时间间隔
+
+    changlaiLeftCount = 15;//常来剩余数量 一场游戏最多只能有这部分常来
+
     itemMap = {};
     itemCount = 0;
     itemIdIndex = 0;
@@ -84,6 +87,8 @@ export default class GameManager extends cc.Component {
 
         this.checkTickTime = 0;
 
+        this.changlaiLeftCount = CommonUtil.randomNumber(10, 18);
+
         //清除所有存在的item
         this.gameContent.removeAllChildren();
         this.itemMap = {};
@@ -116,8 +121,17 @@ export default class GameManager extends cc.Component {
         this.changwangTipNode.runAction(cc.moveTo(0.6, cc.v2(168, this.changwangTipNode.y)).easing(cc.easeCubicActionOut()));
 
         this.gameStartTip.opacity = 0;
+        this.gameStartTip.getChildByName('countdown_sp_3').active = true;
+        this.gameStartTip.getChildByName('countdown_sp_2').active = false;
+        this.gameStartTip.getChildByName('countdown_sp_1').active = false;
 
-        this.gameStartTip.runAction(cc.sequence(cc.delayTime(0.5), cc.fadeIn(0.3), cc.delayTime(1.5), cc.callFunc(()=> {
+        this.gameStartTip.runAction(cc.sequence(cc.delayTime(0.5), cc.fadeIn(0.3), cc.delayTime(1), cc.callFunc(()=> {
+            this.gameStartTip.getChildByName('countdown_sp_3').active = false;
+            this.gameStartTip.getChildByName('countdown_sp_2').active = true;
+        }), cc.delayTime(1), cc.callFunc(()=> {
+            this.gameStartTip.getChildByName('countdown_sp_2').active = false;
+            this.gameStartTip.getChildByName('countdown_sp_1').active = true;
+        }), cc.delayTime(1), cc.callFunc(()=> {
             this.readyBegin.active = false;
             this.chooseItemType = ItemType.changlai;
             this.startGame();
@@ -205,6 +219,14 @@ export default class GameManager extends cc.Component {
                 item.initGame(this.chooseItemType, this.clickItemCb.bind(this), this);
                 this.gameContent.addChild(itemNode);
                 
+                //todo 常来出现数量超过这个数，就全都只出现常往
+                // if(item.itemType === ItemType.changlai) {
+                //     this.changlaiLeftCount--;
+                // }
+                // if(this.changlaiLeftCount <= 0) {
+
+                // }
+
                 // console.log('-----生成了一个', this.itemCount);
                 //初始化位置
                 itemNode.x = -(itemNode.width / 2 + 30 + this.gameContent.width / 2);

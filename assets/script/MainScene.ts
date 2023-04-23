@@ -234,7 +234,7 @@ export default class MainScene extends cc.Component {
         let menuLayer = this.node.getChildByName('menuLayer');
         menuLayer.getChildByName('btnRule1').active = false;
         menuLayer.getChildByName('btnMusic1').active = false;
-        menuLayer.getChildByName('btnRule2').active = true;
+        menuLayer.getChildByName('btnRule2').active = false;
         menuLayer.getChildByName('btnMusic2').active = true;
 
         EventManager.dispatchEvent(NOTI_NAME.CLOSE_DIALOG, {
