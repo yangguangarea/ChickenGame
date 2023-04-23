@@ -139,41 +139,41 @@
 	}
 
 	function getParam(url, name){
+		if(url.indexOf('?') === -1) {
+			return null;
+		}
 		var reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)");
 		var r = url.split("?")[1].match(reg);
 		if (r != null) return decodeURI(r[2]);
 		return null;
 	};
 	
+	if(checkIsWechatBrowser()) {
+		let code = getParam(window.location.href, 'code');
+		console.log('------code111', code);
+		if(code) {
+			console.log('------code222', code);
+		} else {
+			console.log('------code333', code);
+			let currentPageUrl = 'https://changshubank.sumaokeji.com/index.html';
+			// let currentPageUrl = window.location.href;
 
-	setTimeout(()=> {
-		if(checkIsWechatBrowser()) {
-			let code = getParam(window.location.href, 'code');
-			console.log('------code111', code);
-			if(code) {
-				console.log('------code222', code);
-			} else {
-				console.log('------code333', code);
-				let currentPageUrl = 'https://changshubank.sumaokeji.com/index.html';
-				// let currentPageUrl = window.location.href;
+			let appid = 'wxff3693cf40c5f63f';
+			// 'https://open.weixin.qq.com/connect/oauth2/authorize?appid=APPID&redirect_uri=REDIRECT_URI&response_type=code&scope=SCOPE&state=STATE#wechat_redirect';
 
-				let appid = 'wxff3693cf40c5f63f';
-				// 'https://open.weixin.qq.com/connect/oauth2/authorize?appid=APPID&redirect_uri=REDIRECT_URI&response_type=code&scope=SCOPE&state=STATE#wechat_redirect';
+			// 'https://open.weixin.qq.com/connect/oauth2/authorize?appid=wx520c15f417810387&redirect_uri=https%3A%2F%2Fchong.qq.com%2Fphp%2Findex.php%3Fd%3D%26c%3DwxAdapter%26m%3DmobileDeal%26showwxpaytitle%3D1%26vb2ctag%3D4_2030_5_1194_60&response_type=code&scope=snsapi_base&state=123#wechat_redirect';
 
-				// 'https://open.weixin.qq.com/connect/oauth2/authorize?appid=wx520c15f417810387&redirect_uri=https%3A%2F%2Fchong.qq.com%2Fphp%2Findex.php%3Fd%3D%26c%3DwxAdapter%26m%3DmobileDeal%26showwxpaytitle%3D1%26vb2ctag%3D4_2030_5_1194_60&response_type=code&scope=snsapi_base&state=123#wechat_redirect';
+			// let redirectUrl = config.wechatCallbackUrl + "?frompage=" + encodeURIComponent(currentPageUrl)
+			// let linkUrl = config.wechatAuthorizeLink
+			// .replace("{APPID}", config.wechatAppId)
+			// .replace("{REDIRECT_URI}", encodeURIComponent(redirectUrl));
 
-				// let redirectUrl = config.wechatCallbackUrl + "?frompage=" + encodeURIComponent(currentPageUrl)
-				// let linkUrl = config.wechatAuthorizeLink
-				// .replace("{APPID}", config.wechatAppId)
-				// .replace("{REDIRECT_URI}", encodeURIComponent(redirectUrl));
-
-				let linkUrl = 'https://open.weixin.qq.com/connect/oauth2/authorize?appid=' + appid 
-				+ '&redirect_uri=' + encodeURIComponent(currentPageUrl)
-				+ '&response_type=code&scope=snsapi_base' + `&state=${123}` + '#wechat_redirect';
-				window.location.href = linkUrl;
-			}
+			let linkUrl = 'https://open.weixin.qq.com/connect/oauth2/authorize?appid=' + appid 
+			+ '&redirect_uri=' + encodeURIComponent(currentPageUrl)
+			+ '&response_type=code&scope=snsapi_base' + `&state=${123}` + '#wechat_redirect';
+			window.location.href = linkUrl;
 		}
-	}, 2000);
+	}
 </script>
 <script type="text/javascript">
 (function () {
