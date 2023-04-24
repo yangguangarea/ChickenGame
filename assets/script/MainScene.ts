@@ -80,6 +80,9 @@ export default class MainScene extends cc.Component {
         menuLayer.getChildByName('btnRule2').active = false;
         menuLayer.getChildByName('btnMusic2').active = false;
         this.loadingLayerAni();
+
+        weixinXX.hideMenu();
+        
     }
 
     // update (dt) {}
@@ -93,7 +96,19 @@ export default class MainScene extends cc.Component {
         // getCurrentPages();
 
         // weixinXX.jumpToWechatAuthorizePage('aaa');
-        EventManager.dispatchEvent(NOTI_NAME.SHOW_TOAST, '您没有抽中奖品', 1500);
+        // EventManager.dispatchEvent(NOTI_NAME.SHOW_TOAST, '您没有抽中奖品', 1500);
+
+        // weixinXX.addJumpBtn();
+        weixinXX.addJumpBtn3();
+
+
+
+        
+        // weixinXX.addJumpBtn3();
+        // this.scheduleOnce(() => {
+        //     weixinXX.removeJumpBtn();
+        // }, 2);
+
     }
 
     testBtnClick2() {
@@ -105,7 +120,7 @@ export default class MainScene extends cc.Component {
         //     console.log('----请求失败', code, reason);
         // });
 
-        EventManager.dispatchEvent(NOTI_NAME.SHOW_TABLE_DIALOG);
+        // EventManager.dispatchEvent(NOTI_NAME.SHOW_TABLE_DIALOG);
         // EventManager.dispatchEvent(NOTI_NAME.SHOW_PRIZE_DIALOG, 'failNode');
         // EventManager.dispatchEvent(NOTI_NAME.SHOW_PRIZE_DIALOG, 'succNode', '2.44');
         // EventManager.dispatchEvent(NOTI_NAME.SHOW_PRIZE_DIALOG, 'recordNode', '2.44', '2024/4/3 11:55');
@@ -113,21 +128,26 @@ export default class MainScene extends cc.Component {
         // getCurrentPages();
         // console.log('---window.location.href', window.location.href);
         // checkIsWechatBrowser();
+
+
+        weixinXX.removeJumpBtn();
     }
 
     testBtnClick3() {
-        let pages = getCurrentPages();
-        let code = CommonUtil.getParam(pages, 'code');
-        NetWork.httpGet('getOpenIdByCode?', {
-            code : code
-        }, (json) => {
-            if(json.status === 1000) {
-                console.log('请求成功', json);
-                NetWork.openId = json.data;
-            }
-        }, () => {
-            console.log('请求失败');
-        });
+        EventManager.dispatchEvent(NOTI_NAME.SHOW_TABLE_DIALOG);
+
+        // let pages = getCurrentPages();
+        // let code = CommonUtil.getParam(pages, 'code');
+        // NetWork.httpGet('getOpenIdByCode?', {
+        //     code : code
+        // }, (json) => {
+        //     if(json.status === 1000) {
+        //         console.log('请求成功', json);
+        //         NetWork.openId = json.data;
+        //     }
+        // }, () => {
+        //     console.log('请求失败');
+        // });
     }
 
     //游戏规则点击

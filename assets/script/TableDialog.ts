@@ -1,7 +1,7 @@
 import { GameOverType, NOTI_NAME } from "./CommonUtil";
 import EventManager from "./EventManager";
 import NetWork from "./NetWork";
-
+import weixinXX, { getCurrentPages } from "./weixin";
 const {ccclass, property} = cc._decorator;
 
 @ccclass
@@ -25,6 +25,7 @@ export default class TableDialog extends cc.Component {
     onDestroy() {
         EventManager.removeListener(NOTI_NAME.ROTATE_TABLE,this.rotateTable,this);
         EventManager.removeListener(NOTI_NAME.TABLE_DIALOG_VISIBLE,this.setContentVisible,this);
+        weixinXX.removeJumpBtn();
     }
 
     start () {
@@ -35,6 +36,10 @@ export default class TableDialog extends cc.Component {
         .to(0.2, {scale: 1.1})
         .to(0.1, {scale: 1})
         .start();
+
+        this.scheduleOnce(()=> {
+            weixinXX.addJumpBtn3();
+        }, 0.3);
     }
 
     closeBtnClick() {
@@ -206,11 +211,11 @@ export default class TableDialog extends cc.Component {
     setContentVisible(visible:boolean) {
         console.log("-----设置了可见度", !!visible ? 255 : 0);
         this.node.getChildByName('content').opacity = !!visible ? 255 : 0;
-    }
-
-    //了解贷款
-    jumpBtnClick() {
-
+        if(!!visible) {
+            weixinXX.addJumpBtn3();
+        } else {
+            weixinXX.removeJumpBtn();
+        }
     }
 
     //中奖记录
@@ -245,5 +250,29 @@ export default class TableDialog extends cc.Component {
         // EventManager.dispatchEvent(NOTI_NAME.SHOW_PRIZE_DIALOG, 'recordNode', '2.44', '2024/4/3 11:55');
     }
 
+    //了解贷款
+    jumpBtnClick() {
+        //跳转微信小程序
+        this.jumpWXAPP();
+    }
+
+
+    async jumpWXAPP() {
+        // let ua = navigator.userAgent.toLowerCase();
+        // let isWXWork = ua.match(/wxwork/i) == 'wxwork';
+        // let isWeixin = !isWXWork && ua.match(/MicroMessenger/i) == 'micromessenger';
+        // let isMobile = false;
+        // let isDesktop = false;
+        // if (navigator.userAgent.match(/(phone|pad|pod|iPhone|iPod|ios|iPad|Android|Mobile|IEMobile)/i)) {
+        //     isMobile = true;
+        // } else {
+        //     isDesktop = true;
+        // }
+        // console.warn('ua', ua);
+        // console.warn(ua.match(/MicroMessenger/i) == 'micromessenger');
+        // let m = ua.match(/MicroMessenger/i);
+        // console.warn(m && m[0] === 'micromessenger');
+
+    }
 
 }
