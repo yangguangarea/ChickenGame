@@ -116,7 +116,7 @@ export default class MainScene extends cc.Component {
         // weixinXX.addJumpBtn();
         // weixinXX.addJumpBtn3();
 
-        NetWork.getSign();
+        // NetWork.getSign();
 
         
         // weixinXX.addJumpBtn3();
@@ -124,6 +124,9 @@ export default class MainScene extends cc.Component {
         //     weixinXX.removeJumpBtn();
         // }, 2);
 
+        EventManager.dispatchEvent(NOTI_NAME.SHOW_PRIZE_DIALOG, 'failNode');
+        // EventManager.dispatchEvent(NOTI_NAME.SHOW_PRIZE_DIALOG, 'succNode', '2.44');
+        // EventManager.dispatchEvent(NOTI_NAME.SHOW_PRIZE_DIALOG, 'recordNode', '2.44', '2024/4/3 11:55');
     }
 
     testBtnClick2() {
@@ -143,7 +146,6 @@ export default class MainScene extends cc.Component {
         // getCurrentPages();
         // console.log('---window.location.href', window.location.href);
         // checkIsWechatBrowser();
-
 
         weixinXX.removeJumpBtn();
     }
@@ -246,7 +248,7 @@ export default class MainScene extends cc.Component {
     gameBeginClick() {
         console.log("游戏开始点击");
         // this.showGameLayer();
-        this.testBtnClick3();
+        // this.testBtnClick3();
         this.ruleBtnClick(true);
     }
 

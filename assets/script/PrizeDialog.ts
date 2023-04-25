@@ -1,6 +1,7 @@
 import { GameOverType, NOTI_NAME } from "./CommonUtil";
 import EventManager from "./EventManager";
-
+import NetWork from "./NetWork";
+import weixinXX, { getCurrentPages } from "./weixin";
 const {ccclass, property} = cc._decorator;
 
 @ccclass
@@ -30,11 +31,16 @@ export default class PrizeDialog extends cc.Component {
         .to(0.2, {scale: 1.1})
         .to(0.1, {scale: 1})
         .start();
+
+        this.scheduleOnce(()=> {
+            weixinXX.addJumpBtn4();
+        }, 0.3);
     }
 
     closeBtnClick() {
         let content = this.node.getChildByName('content');
         content.scale = 1;
+        weixinXX.removeJumpBtn2();
         cc.tween(content)
         .to(0.3, {scale: 0},  {easing: 'quadOut'})
         .call(() => {

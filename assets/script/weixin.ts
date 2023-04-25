@@ -366,12 +366,88 @@ class weixinXX {
 		}, 300);
 	}
 
+
+	addJumpBtn4() {
+
+		let htmlW = document.documentElement.clientWidth;
+		let htmlH = document.documentElement.clientHeight;
+		// 获取body的宽度
+		let bodyW = document.body.clientWidth;
+		let bodyH = document.body.clientHeight;
+		// 兼容处理
+		let W = htmlW||bodyW;
+		let H = htmlH||bodyH;
+		// 258 111    445 83   -288.3
+		// document.documentElement.style.fontSize = (W / 750 * 100) + 'px';
+		let btnWidth = `${445/750* W}px`;
+		let btnHeight = `${83/750* W}px`;
+		let color = 'background-color: rgba(232, 51, 12, 0);'
+		
+		//计算高度位置
+		let leftPos = `${(750 / 2 - 445/2) / 750 * W}px`;
+		let topPos = `${(288.3 - 83/2) / 750 * W + H / 2}px`;
+		// (1334 / 2 + 420.366 - 111/2) / 1334 * H
+
+		// let username = 'gh_d43f693ca31f';
+		// let path = '/page/component/index';
+
+		let smallWxAppid = 'wx7f0aa46ec0a6ca47';
+		let path = 'pages/middlePage/middlePage?shareurl=%2FpackageB%2Fpages%2FcitizenLoan%2FapplyOnce%2FapplyOnce%3Fproducttype%3D100066';
+		let username = 'gh_cdc8cf19b197';
+
+		let htmlStr = `<div id="wxbtncontainer2" class="wxbtncontainer2" style="position:absolute; left:${leftPos}; top:${topPos}; width: ${btnWidth}; height: ${btnHeight}; display: block; background-color: rgba(232, 51, 12, 0.8);">` + 
+						`<wx-open-launch-weapp id="launch-btn" username="${username}" path="${path}">` + 
+							// '<script type="text/wxtag-template">' + 
+							'<template>' + 
+								`<button id="wxbtn2" class="wxbtn2" style="width: ${btnWidth}; height: ${btnHeight}; ${color} text-align: center; font-size: 17px; display: block; border: none; background-size: 100%; background-repeat: no-repeat; background-image: url(https://changshubank.sumaokeji.com/prizeDialog_btn_jump.png); "></button>` + 
+							// '</script>' + 
+							'</template>' + 
+						'</wx-open-launch-weapp>' + 
+					'</div>';
+
+		// htmlStr = '<wx-open-launch-weapp id="launch-btn" username="gh_d43f693ca31f" path="/page/component/index">' + 
+		// 				'<template>' + 
+		// 					'<button style="width: 200px; height: 45px; text-align: center; font-size: 17px; display: block; margin: 0 auto; padding: 8px 24px; border: none; border-radius: 4px; background-color: #07c160; color:#fff;">打开小程序</button>' + 
+		// 				'</template>' + 
+		// 			'</wx-open-launch-weapp>';
+		
+		// htmlStr = '<button style="position:absolute; left:0; top:0; width: 200px; height: 45px; text-align: center; font-size: 17px; display: block; margin: 0 auto; padding: 8px 24px; border: none; border-radius: 4px; background-color: #07c160; color:#fff;">打开小程序</button>';
+		
+		// htmlStr = '<wx-open-launch-weapp id="launch-btn" username="gh_d43f693ca31f" path="/page/component/index">' + 
+		// 				'<button style="width: 200px; height: 45px; text-align: center; font-size: 17px; display: block; margin: 0 auto; padding: 8px 24px; border: none; border-radius: 4px; background-color: #07c160; color:#fff;">打开小程序</button>' + 
+		// 			'</wx-open-launch-weapp>';
+		let gameDiv = document.getElementById('Cocos2dGameContainer');//获取div元素
+		// gameDiv.insertAdjacentHTML('afterEnd',htmlStr);
+		gameDiv.insertAdjacentHTML('beforeend',htmlStr);
+
+
+		setTimeout(() => {
+			let wxbtn = document.getElementById('wxbtn2');//获取div元素
+			if(wxbtn) {
+				// wxbtn.onclick();
+				wxbtn.onclick = () => {
+					console.log("------点击了跳转市民贷");
+				}
+			}
+		}, 300);
+	}
+
+
+
 	removeJumpBtn() {
 		let ele = document.getElementById('wxbtncontainer');
 		if(ele) {
 			ele.remove();
 		}
 	}
+
+	removeJumpBtn2() {
+		let ele = document.getElementById('wxbtncontainer2');
+		if(ele) {
+			ele.remove();
+		}
+	}
+
 }
 
 export default new weixinXX();
