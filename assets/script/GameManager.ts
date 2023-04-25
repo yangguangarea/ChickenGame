@@ -34,8 +34,8 @@ export default class GameManager extends cc.Component {
 
     chooseItemType:ItemType = ItemType.changlai;//选择点击的常来常往类型
 
-    maxTime = 20;
-    gameTime = 20;//游戏剩余时间
+    maxTime = 15;
+    gameTime = 15;//游戏剩余时间
 
     clickTime = 0;//游戏累计无操作时间
     score = 0;

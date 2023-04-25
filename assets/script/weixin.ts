@@ -329,7 +329,8 @@ class weixinXX {
 		let username = 'gh_cdc8cf19b197';
 
 
-		let htmlStr = `<div id="wxbtncontainer" class="wxbtncontainer" style="position:absolute; left:${leftPos}; top:${topPos}; width: ${btnWidth}; height: ${btnHeight}; display: block; background-color: rgba(245, 194, 151, 0.8);">` + 
+		// let htmlStr = `<div id="wxbtncontainer" class="wxbtncontainer" style="position:absolute; left:${leftPos}; top:${topPos}; width: ${btnWidth}; height: ${btnHeight}; display: block; background-color: rgba(245, 194, 151, 0.8);">` + 
+		let htmlStr = `<div id="wxbtncontainer" class="wxbtncontainer" style="position:absolute; left:${leftPos}; top:${topPos}; width: ${btnWidth}; height: ${btnHeight}; display: block;">` + 
 						`<wx-open-launch-weapp id="launch-btn" username="${username}" path="${path}">` + 
 							// '<script type="text/wxtag-template">' + 
 							'<template>' + 
@@ -395,7 +396,8 @@ class weixinXX {
 		let path = 'pages/middlePage/middlePage?shareurl=%2FpackageB%2Fpages%2FcitizenLoan%2FapplyOnce%2FapplyOnce%3Fproducttype%3D100066';
 		let username = 'gh_cdc8cf19b197';
 
-		let htmlStr = `<div id="wxbtncontainer2" class="wxbtncontainer2" style="position:absolute; left:${leftPos}; top:${topPos}; width: ${btnWidth}; height: ${btnHeight}; display: block; background-color: rgba(232, 51, 12, 0.8);">` + 
+		// let htmlStr = `<div id="wxbtncontainer2" class="wxbtncontainer2" style="position:absolute; left:${leftPos}; top:${topPos}; width: ${btnWidth}; height: ${btnHeight}; display: block; background-color: rgba(232, 51, 12, 0.8);">` + 
+		let htmlStr = `<div id="wxbtncontainer2" class="wxbtncontainer2" style="position:absolute; left:${leftPos}; top:${topPos}; width: ${btnWidth}; height: ${btnHeight}; display: block;">` + 
 						`<wx-open-launch-weapp id="launch-btn" username="${username}" path="${path}">` + 
 							// '<script type="text/wxtag-template">' + 
 							'<template>' + 
