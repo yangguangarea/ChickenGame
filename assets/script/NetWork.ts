@@ -48,10 +48,11 @@
 // 		return Math.floor(Math.random() * (max - min + 1) + min);
 // 	}
 // }
-
+import weixinXX, { getCurrentPages } from "./weixin";
 class NetWork {
 
 	openId:string = '';
+	url = null;
 
 	sendXHR (requestName:string, param?, succCallback?, failCallback?) {
 		var xhr = new XMLHttpRequest();
@@ -84,25 +85,49 @@ class NetWork {
 	}
 
 	
-	// getOpenidByCode() {
-	//     this.httpGet({'code': 3218789}, (data)=> {
-	//         console.log('----请求成功', data);
-	//     }, (code, reason) => {
-	//         console.log('----请求失败', code, reason);
-	//     });
-	// }
+	getSign() {
+		// let url = window.location.origin + window.location.pathname;
+
+		let url = window.location.href.split('#')[0];
+
+		console.log('---url', url);
+        this.httpGet('getSign?', {
+            url : encodeURIComponent(url)
+        }, (json) => {
+            if(json && json.status === 1000) {
+                console.log('请求成功', json);
+				weixinXX.hideMenu(json.data);
+            } else {
+				console.log('请求失败11', json);
+                if(json && json.message) {
+                }
+            }
+        }, () => {
+            console.log('请求失败22');
+        });
+
+	}
 
 
+
+	// https://api.sumaokeji.com/sumao/api/bank/getOpenldByCode?code=03111dml28ZAab4HeRkl29P8FY1L1dmg
+	// https://changshubank.sumaokeji.com/index.html?code=03111dml28ZAab4HeRkl29P8FY1L1dmg
 	httpGet(url, param, succ, fail, method?) {
-		let source = 'https://api.sumaokeji.com/sumao/api/bank/';
+
+		// https://api.sumaokeji.com/sumao/api/bank/getSign?url=https%3A%2F%2Fchangshubank.sumaokeji.com%2Findex.html
+
+		console.log('---接口原始url', url);
+		console.log('---接口原始param', param);
+		// let source = 'https://api.sumaokeji.com/sumao/api/bank/';
+		let source = 'https://changshubank.sumaokeji.com/sumao/api/bank/';
 		url = source + url;
 		for (let key in param) {
 			url += key + '=' + param[key];
 			url += '&'; 
 		}
 		url = url.substring(0,url.length-1);
-		console.log("url :" + url);
-		var xhr = new XMLHttpRequest();
+		console.log("接口url:" + url);
+		let xhr = new XMLHttpRequest();
 		xhr.open('GET', url, true);
 		['about', 'error', 'timeout'].forEach((eventname) => {
 			xhr[`on${eventname}`] = () => {
@@ -115,6 +140,7 @@ class NetWork {
 		xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded;")
 		xhr.onreadystatechange = () => {
 			if (xhr.readyState === 4) {
+				console.log('---结束后xhr', xhr);
 				let data = xhr.responseText;
 				let json;
 				try {

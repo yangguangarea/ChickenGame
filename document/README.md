@@ -24,5 +24,14 @@ sumao1518!
 
 
 AppID与AppSecret账号：
-AppID：wxff3693cf40c5f63f
-AppSecret：b811ca802a947e1f279279532bc4c9bb
+AppID: wxff3693cf40c5f63f
+AppSecret: b811ca802a947e1f279279532bc4c9bb
+
+
+let smallWxAppid = 'wx7f0aa46ec0a6ca47';
+let path = 'pages/middlePage/middlePage?shareurl=%2FpackageB%2Fpages%2FcitizenLoan%2FapplyOnce%2FapplyOnce%3Fproducttype%3D100066';
+let username = 'gh_cdc8cf19b197';
+
+
+
+{"status":1000,"message":"获取成功!!!!!!","data":{"appId":"wxff3693cf40c5f63f","nonceStr":"tJXhWUcVJr92CjlU","timestamp":"1682392225","url":"https://changshubank.sumaokeji.com/index.html","signature":"664a570a2099f15ea1f598343c69f813402b485e"}}

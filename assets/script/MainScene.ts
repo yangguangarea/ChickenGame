@@ -80,9 +80,24 @@ export default class MainScene extends cc.Component {
         menuLayer.getChildByName('btnRule2').active = false;
         menuLayer.getChildByName('btnMusic2').active = false;
         this.loadingLayerAni();
+        this.getOpenIdByCode();
+    }
 
-        weixinXX.hideMenu();
-        
+    getOpenIdByCode() {
+        let pages = getCurrentPages();
+        let code = CommonUtil.getParam(pages, 'code');
+        NetWork.httpGet('getOpenIdByCode?', {
+            code : code
+        }, (json) => {
+            if(json.status === 1000) {
+                console.log('请求成功', json);
+                NetWork.openId = json.data;
+                
+                NetWork.getSign();
+            }
+        }, () => {
+            console.log('请求失败');
+        });
     }
 
     // update (dt) {}
@@ -99,9 +114,9 @@ export default class MainScene extends cc.Component {
         // EventManager.dispatchEvent(NOTI_NAME.SHOW_TOAST, '您没有抽中奖品', 1500);
 
         // weixinXX.addJumpBtn();
-        weixinXX.addJumpBtn3();
+        // weixinXX.addJumpBtn3();
 
-
+        NetWork.getSign();
 
         
         // weixinXX.addJumpBtn3();
@@ -135,19 +150,6 @@ export default class MainScene extends cc.Component {
 
     testBtnClick3() {
         EventManager.dispatchEvent(NOTI_NAME.SHOW_TABLE_DIALOG);
-
-        // let pages = getCurrentPages();
-        // let code = CommonUtil.getParam(pages, 'code');
-        // NetWork.httpGet('getOpenIdByCode?', {
-        //     code : code
-        // }, (json) => {
-        //     if(json.status === 1000) {
-        //         console.log('请求成功', json);
-        //         NetWork.openId = json.data;
-        //     }
-        // }, () => {
-        //     console.log('请求失败');
-        // });
     }
 
     //游戏规则点击

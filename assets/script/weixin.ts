@@ -4,6 +4,7 @@
 // &redirect_uri=https://chong.qq.com/php/index.php?d=&c=wxAdapter&m=mobileDeal&showwxpaytitle=1&vb2ctag=4_2030_5_1194_60&response_type=code&scope=snsapi_base&state=123#wechat_redirect
 
 import CommonUtil from "./CommonUtil";
+import NetWork from "./NetWork";
 import { hex_sha1 } from "./sha1";
 const { wx } = window;
 export function checkIsWechatBrowser() {
@@ -165,7 +166,7 @@ class weixinXX {
 // 		window.location.href = sourceUrl;
 // 		}
 // 	},
-	hideMenu() {
+	hideMenu(configData) {
 		console.log("---------微信接口1111");
 		function docReady(fn) {
 			console.log("---------微信接口2222");
@@ -177,13 +178,13 @@ class weixinXX {
 			}
 		}
 		console.log("---------微信接口4444");
-		docReady(async function() {
+		docReady(async () => {
 			console.log("---------微信接口5555");
-			var ua = navigator.userAgent.toLowerCase()
-			var isWXWork = ua.match(/wxwork/i) == 'wxwork'
-			var isWeixin = !isWXWork && ua.match(/MicroMessenger/i) == 'micromessenger'
-			var isMobile = false
-			var isDesktop = false
+			let ua = navigator.userAgent.toLowerCase()
+			let isWXWork = ua.match(/wxwork/i) == 'wxwork'
+			let isWeixin = !isWXWork && ua.match(/MicroMessenger/i) == 'micromessenger'
+			let isMobile = false
+			let isDesktop = false
 			if (navigator.userAgent.match(/(phone|pad|pod|iPhone|iPod|ios|iPad|Android|Mobile|IEMobile)/i)) {
 				isMobile = true
 			} else {
@@ -191,7 +192,7 @@ class weixinXX {
 			}
 			console.warn('ua', ua)
 			console.warn(ua.match(/MicroMessenger/i) == 'micromessenger')
-			var m = ua.match(/MicroMessenger/i)
+			let m = ua.match(/MicroMessenger/i)
 			console.warn(m && m[0] === 'micromessenger')
 	
 			if (isWeixin) {
@@ -225,10 +226,22 @@ class weixinXX {
 				let con = `jsapi_ticket=${'jdiwjd'}&noncestr=${nonceStr}&timestamp=${timestamp}&url=${urlN}`
 				let signature = hex_sha1(con);
 
+
+				// let smallWxAppid = 'wx7f0aa46ec0a6ca47';
+				let smallWxAppid = configData.appId;
+				nonceStr = configData.nonceStr;
+				timestamp = configData.timestamp;
+				signature = configData.signature;
+
+				// configData
+				// {"status":1000,"message":"获取成功!!!!!!","data":{"appId":"wxff3693cf40c5f63f","nonceStr":"tJXhWUcVJr92CjlU","timestamp":"1682392225","url":"https://changshubank.sumaokeji.com/index.html","signature":"664a570a2099f15ea1f598343c69f813402b485e"}}
+				NetWork.url = configData.url;
+
+
 				let configParam = {
-					debug: true, // 调试时可开启
+					debug: false, // 调试时可开启
 					// appId: 'wxe5f52902cf4de896',
-					appId: 'wxff3693cf40c5f63f',
+					appId: smallWxAppid,
 					timestamp: timestamp, // 必填，填任意数字即可
 					nonceStr: nonceStr, // 必填，填任意非空字符串即可
 					signature: signature, // 必填，填任意非空字符串即可
@@ -307,12 +320,23 @@ class weixinXX {
 		let topPos = `${(420.366 - 111/2) / 750 * W + H / 2}px`;
 		// (1334 / 2 + 420.366 - 111/2) / 1334 * H
 
-		let htmlStr = `<div id="wxbtncontainer" class="wxbtncontainer" style="position:absolute; left:${leftPos}; top:${topPos}; width: ${btnWidth}; height: ${btnHeight}; display: block; ">` + 
-						// '<wx-open-launch-weapp id="launch-btn" username="gh_d43f693ca31f" path="/page/component/index">' + 
-						// 	'<template>' + 
+
+		// let username = 'gh_d43f693ca31f';
+		// let path = '/page/component/index';
+
+		let smallWxAppid = 'wx7f0aa46ec0a6ca47';
+		let path = 'pages/middlePage/middlePage?shareurl=%2FpackageB%2Fpages%2FcitizenLoan%2FapplyOnce%2FapplyOnce%3Fproducttype%3D100066';
+		let username = 'gh_cdc8cf19b197';
+
+
+		let htmlStr = `<div id="wxbtncontainer" class="wxbtncontainer" style="position:absolute; left:${leftPos}; top:${topPos}; width: ${btnWidth}; height: ${btnHeight}; display: block; background-color: rgba(245, 194, 151, 0.8);">` + 
+						`<wx-open-launch-weapp id="launch-btn" username="${username}" path="${path}">` + 
+							// '<script type="text/wxtag-template">' + 
+							'<template>' + 
 								`<button id="wxbtn" class="wxbtn" style="width: ${btnWidth}; height: ${btnHeight}; ${color} text-align: center; font-size: 17px; display: block; border: none; background-size: 100%; background-repeat: no-repeat; background-image: url(https://changshubank.sumaokeji.com/tableDialog_btn_jump.png); "></button>` + 
-							// '</template>' + 
-						// '</wx-open-launch-weapp>' + 
+							// '</script>' + 
+							'</template>' + 
+						'</wx-open-launch-weapp>' + 
 					'</div>';
 
 		// htmlStr = '<wx-open-launch-weapp id="launch-btn" username="gh_d43f693ca31f" path="/page/component/index">' + 
