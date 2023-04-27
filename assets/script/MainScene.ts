@@ -81,6 +81,17 @@ export default class MainScene extends cc.Component {
         menuLayer.getChildByName('btnMusic2').active = false;
         this.loadingLayerAni();
         this.getOpenIdByCode();
+        this.addBadiuListenerCode();
+    }
+
+    addBadiuListenerCode() {
+        var _hmt = _hmt || [];
+        (function() {
+          var hm = document.createElement("script");
+          hm.src = "https://hm.baidu.com/hm.js?9e5b8055a0b9197ce153d1079d63435b";
+          var s = document.getElementsByTagName("script")[0]; 
+          s.parentNode.insertBefore(hm, s);
+        })();
     }
 
     getOpenIdByCode() {
