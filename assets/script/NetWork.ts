@@ -119,7 +119,9 @@ class NetWork {
 		console.log('---接口原始url', url);
 		console.log('---接口原始param', param);
 		// let source = 'https://api.sumaokeji.com/sumao/api/bank/';
-		let source = 'https://changshubank.sumaokeji.com/sumao/api/bank/';
+		// let source = 'https://changshubank.sumaokeji.com/sumao/api/bank/';
+		let source = 'https://bankapi.sumaokeji.com/sumao/api/bank/';
+		
 		url = source + url;
 		for (let key in param) {
 			url += key + '=' + param[key];

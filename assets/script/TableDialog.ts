@@ -160,43 +160,54 @@ export default class TableDialog extends cc.Component {
         //     }
         // }
 
+        // let json = {
+        //     status:1000,
+        //     message:"dwjidjwidj",
+        //     data:null,
+        // }
+
         NetWork.httpGet('prize?', {
             openId : NetWork.openId
         }, (json) => {
             if(json && json.status === 1000) {
                 console.log('请求成功', json);
-                //默认逆时针旋转
-                // let reward = '谢谢参与';
-                let reward = Number(json.data.amount);
-                let rewardMap = [1.68, 8.88, 2.68, 5.88, 0, 16.88, 1.68, 2.68]
-                this.tableNode.angle = 0;
-                let rotate = 0;
-                for (let i = 0; i < rewardMap.length; i++) {
-                    if(`${rewardMap[i]}` === `${reward}`) {
-                        // rotate = 22.5 + 45 * i + 360 * 2;
-                        rotate = -22.5 - 45 * i - 360 * 2;
-                        console.log("-----旋转的是", i, rewardMap[i]);
-                    }
-                }
-                
-                console.log("----rotate", rotate);
-                this.isStartReward = true;
-                this.tableNode.runAction(cc.sequence(cc.rotateBy(2, rotate).easing(cc.easeCubicActionOut()), cc.delayTime(0.5), cc.callFunc(()=> {
-                    //弹出中奖金额弹窗
-                    this.isStartReward = false;
-                    // 	"data":{
-                    // 		"prizeName":"",//奖品名称
-                    // 		"content":"",//奖品描述
-                    // 		"amount":中奖金额
-                    // 	}
-                    if(json.data) {
-                        if(Number(json.data.amount) === 0) {
-                            EventManager.dispatchEvent(NOTI_NAME.SHOW_PRIZE_DIALOG, 'failNode');
-                        } else {
-                            EventManager.dispatchEvent(NOTI_NAME.SHOW_PRIZE_DIALOG, 'succNode', `${json.data.amount}`);
+                if(json.data) {
+                    //默认逆时针旋转
+                    // let reward = '谢谢参与';
+                    let reward = Number(json.data.amount);
+                    let rewardMap = [1.68, 8.88, 2.68, 5.88, 0, 16.88, 1.68, 2.68]
+                    this.tableNode.angle = 0;
+                    let rotate = 0;
+                    for (let i = 0; i < rewardMap.length; i++) {
+                        if(`${rewardMap[i]}` === `${reward}`) {
+                            // rotate = 22.5 + 45 * i + 360 * 2;
+                            rotate = -22.5 - 45 * i - 360 * 2;
+                            console.log("-----旋转的是", i, rewardMap[i]);
                         }
                     }
-                })));
+                    
+                    console.log("----rotate", rotate);
+                    this.isStartReward = true;
+                    this.tableNode.runAction(cc.sequence(cc.rotateBy(2, rotate).easing(cc.easeCubicActionOut()), cc.delayTime(0.5), cc.callFunc(()=> {
+                        //弹出中奖金额弹窗
+                        this.isStartReward = false;
+                        // 	"data":{
+                        // 		"prizeName":"",//奖品名称
+                        // 		"content":"",//奖品描述
+                        // 		"amount":中奖金额
+                        // 	}
+                        if(json.data) {
+                            if(Number(json.data.amount) === 0) {
+                                EventManager.dispatchEvent(NOTI_NAME.SHOW_PRIZE_DIALOG, 'failNode');
+                            } else {
+                                EventManager.dispatchEvent(NOTI_NAME.SHOW_PRIZE_DIALOG, 'succNode', `${json.data.amount}`);
+                            }
+                        }
+                    })));
+                } else {
+                    EventManager.dispatchEvent(NOTI_NAME.SHOW_TOAST, json.message, 1500);
+                }
+            
             } else {
                 if(json && json.message) {
                     EventManager.dispatchEvent(NOTI_NAME.SHOW_TOAST, json.message, 1500);

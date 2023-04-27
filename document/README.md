@@ -35,3 +35,18 @@ let username = 'gh_cdc8cf19b197';
 
 
 {"status":1000,"message":"获取成功!!!!!!","data":{"appId":"wxff3693cf40c5f63f","nonceStr":"tJXhWUcVJr92CjlU","timestamp":"1682392225","url":"https://changshubank.sumaokeji.com/index.html","signature":"664a570a2099f15ea1f598343c69f813402b485e"}}
+
+
+http://localhost:7456/
+
+https://littleidea.elloworld.cn/Ju/lookDucks/?openid=o1Z-rjrT21tQckD34IQUAHD-W6Bk&nickname=%E9%98%B3%E5%85%89&headimgurl=https%3A%2F%2Fthirdwx.qlogo.cn%2Fmmopen%2Fvi_32%2FQ0j4TwGTfTI4sxGqZP1pGGfvgLMVTwSNmrSib7sF2J3YNd4ntgj4tR76YLDYtJtSS70GPRIQ2K6w2AXnzzxPfhg%2F132#/
+
+
+https://changshubank.sumaokeji.com/index.html?code=03111dml28ZAab4HeRkl29P8FY1L1dmg
+
+
+
+后端微信安全ip：47.92.1.156    47.92.146.104     39.100.31.2
+发红包所用ip： 8.142.16.5
+前端访问地址：https://changshubank.sumaokeji.com/index.html
+后端新接口域名： https://bankapi.sumaokeji.com/

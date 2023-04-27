@@ -108,6 +108,7 @@ export default class MainScene extends cc.Component {
         // this.showResultDialog(8, 1, GameOverType.longTimeNoClick);
         // EventManager.dispatchEvent(NOTI_NAME.SHOW_PRIZE_DIALOG, 'succNode', '2.44');
         console.log("----idowiahiwoadj点击按钮111");
+        EventManager.dispatchEvent(NOTI_NAME.SHOW_TABLE_DIALOG);
         // getCurrentPages();
 
         // weixinXX.jumpToWechatAuthorizePage('aaa');
@@ -124,7 +125,7 @@ export default class MainScene extends cc.Component {
         //     weixinXX.removeJumpBtn();
         // }, 2);
 
-        EventManager.dispatchEvent(NOTI_NAME.SHOW_PRIZE_DIALOG, 'failNode');
+        // EventManager.dispatchEvent(NOTI_NAME.SHOW_PRIZE_DIALOG, 'failNode');
         // EventManager.dispatchEvent(NOTI_NAME.SHOW_PRIZE_DIALOG, 'succNode', '2.44');
         // EventManager.dispatchEvent(NOTI_NAME.SHOW_PRIZE_DIALOG, 'recordNode', '2.44', '2024/4/3 11:55');
     }
